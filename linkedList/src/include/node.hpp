@@ -1,94 +1,94 @@
 #ifndef NODE_HPP
 #define NODE_HPP
 
-#include <iostream>
-
-template <typename T>
+template <class T>
 class Node
 {
 private:
-    std::size_t mSize;
-    T mData;
-    Node *pNext;
+    T data;
+    Node<T> *next;
 
 public:
-    Node(T item)
+    Node()
     {
-        this->mSize = sizeof(item);
-        this->mData = item;
-        this->pNext = nullptr;
+        this->data = nullptr;
+        this->next = nullptr;
     }
 
-    Node &operator=(const Node<T> &node)
+    Node(T data)
     {
-        this->mSize = node.mSize;
-        this->mData = node.mData;
-        this->pNext = node.pNext;
+        this->data = data;
+        this->next = nullptr;
+    }
 
+    Node(const Node &node)
+    {
+        this->data = node.data;
+        this->next = node.next;
+    }
+
+    ~Node()
+    {
+        this->next = nullptr;
+        this->data.~T();
+    }
+
+    T &getData()
+    {
+        return this->data;
+    }
+
+    void setData(const T &data)
+    {
+        this->data = data;
+    }
+
+    Node<T> *getNext() const
+    {
+        return this->next;
+    }
+
+    void setNext(Node<T> *node)
+    {
+        this->next = node;
+    }
+
+    Node &operator=(const Node &node)
+    {
+        this->data = node.data;
+        this->next = node.next;
+        this->right = node.right;
         return *this;
     }
 
-    Node *copy()
+    bool operator==(const Node &node) const
     {
-        T mData = this->mData;
-        return new Node<T>(mData);
+        return this->data == node.data;
     }
 
-    std::size_t size()
+    bool operator!=(const Node &node) const
     {
-        return this->mSize;
+        return this->data != node.data;
     }
 
-    T &data()
+    bool operator<(const Node &node) const
     {
-        return this->mData;
+        return this->data < node.data;
     }
 
-    void setData(T item)
+    bool operator>(const Node &node) const
     {
-        this->mSize = sizeof(item);
-        this->mData = item;
+        return this->data > node.data;
     }
 
-    Node *next()
+    bool operator<=(const Node &node) const
     {
-        return this->pNext;
+        return this->data <= node.data;
     }
 
-    void setNext(Node *pNext)
+    bool operator>=(const Node &node) const
     {
-        this->pNext = pNext;
-    }
-
-    bool
-    operator==(const Node<T> &node)
-    {
-        return this->mData == node.mData;
-    }
-
-    bool operator!=(const Node<T> &node)
-    {
-        return this->mData != node.mData;
-    }
-
-    bool operator>(const Node<T> &node)
-    {
-        return this->mData > node.mData;
-    }
-
-    bool operator<(const Node<T> &node)
-    {
-        return this->mData < node.mData;
-    }
-
-    bool operator<=(const Node<T> &node)
-    {
-        return this->mData <= node.mData;
-    }
-
-    bool operator>=(const Node<T> &node)
-    {
-        return this->mData >= node.mData;
+        return this->data >= node.data;
     }
 };
 

@@ -13,6 +13,34 @@ private:
     Node<T> *head;
     Node<T> *tail;
 
+    Node<T> *getNode(int index)
+    {
+        Node<T> *currNode = this->head;
+        for (size_t i = 0; i < index; i++)
+        {
+            currNode = currNode->getNext();
+        }
+        return currNode;
+    }
+
+    Node<T> *popNode()
+    {
+        if (this->head == this->tail)
+        {
+            this->size = 0;
+            return this->head;
+        }
+        else
+        {
+            Node<T> *last = this->tail;
+            Node<T> *preTail = this->getNode(this->size - 2);
+            preTail->setNext(nullptr);
+            this->tail = preTail;
+            this->size--;
+            return last;
+        }
+    }
+
 public:
     LinkedList()
     {
@@ -23,115 +51,129 @@ public:
 
     ~LinkedList()
     {
+        while (this->size != 0)
+        {
+            delete this->popNode();
+        }
     }
 
     Node<T> *getHead()
     {
-        Node<T> *pHeadCopy = this->head;
-        return pHeadCopy;
+        return this->head;
     }
 
     Node<T> *getTail()
     {
-        Node<T> *tailCopy = this->tail;
-        return tailCopy;
+        return this->tail;
     }
 
-    bool empty()
+    size_t getSize()
+    {
+        return this->size;
+    }
+
+    bool isEmpty()
     {
         return this->head == nullptr ? true : false;
     }
 
-    Node<T> &get(int index)
+    T &get(int index)
     {
-        Node<T> *c = this->head;
-        for (size_t i = 0; i < index; i++)
+        if (index >= this->size || index < 0)
         {
-            if (c == nullptr)
-            {
-                throw std::invalid_argument("invalid index");
-            }
-            c = c->next();
+            throw std::invalid_argument("invalid index");
         }
-        return *c;
+        return this->getNode(index)->getData();
     }
 
-    void push(T item)
+    void push(const T &data)
     {
         if (this->head == nullptr)
         {
-            this->head = new Node<T>(item);
+            this->head = new Node<T>(data);
             this->tail = this->head;
-            this->size++;
-            return;
-        }
-
-        this->tail->setNext(new Node<T>(item));
-        this->tail = this->tail->next();
-        this->size++;
-    }
-
-    void insert(T item, int index)
-    {
-        if (index == 0)
-        {
-            Node<T> *newnode = new Node<T>(item);
-
-            newnode->setNext(this->head);
-            this->head = newnode;
-
-            this->size++;
-        }
-        else if (index == this->size)
-        {
-            Node<T> *newnode = new Node<T>(item);
-            this->tail->setNext(newnode);
-            this->tail = newnode;
             this->size++;
         }
         else
         {
-            Node<T> *prev = &(this->get(index - 1));
-            if (prev == nullptr)
-            {
-                throw std::invalid_argument("LinkedList error: node is nullptr");
-            }
+            this->tail->setNext(new Node<T>(data));
+            this->tail = this->tail->getNext();
+            this->size++;
+        }
+    }
 
-            Node<T> *newnode = new Node<T>(item);
-
-            newnode->setNext(prev->next());
-            prev->setNext(newnode);
-
+    void insert(int index, const T &data)
+    {
+        if (index > this->size || index < 0)
+        {
+            throw std::invalid_argument("invalid index");
+        }
+        if (index == 0)
+        {
+            Node<T> *newNode = new Node<T>(data);
+            newNode->setNext(this->head);
+            this->head = newNode;
+            this->size++;
+        }
+        else if (index == this->size)
+        {
+            this->tail->setNext(new Node<T>(data));
+            this->tail = this->tail->getNext();
+            this->size++;
+        }
+        else
+        {
+            Node<T> *prev = this->getNode(index - 1);
+            Node<T> *newNode = new Node<T>(data);
+            newNode->setNext(prev->getNext());
+            prev->setNext(newNode);
             this->size++;
         }
     }
 
     T pop()
     {
-        T tmp = this->tail->data();
-        Node<T> *preTail = &(this->get(this->size - 2));
-        preTail->setNext(nullptr);
-        delete this->tail;
-        this->tail = preTail;
-        return tmp;
+        return this->popNode()->getData();
     }
 
-    T remove(int index) {}
+    T remove(int index)
+    {
+        if (index >= this->size || index < 0)
+        {
+            throw std::invalid_argument("invalid index");
+        }
+        if (index == 0)
+        {
+            T data = this->head->getData();
+            Node<T> *newHead = this->head->getNext();
+            delete this->head;
+            this->head = newHead;
+            this->size--;
+        }
+        else if (index == this->size - 1)
+        {
+            Node<T> *newTail = this->getNode(this->size - 2);
+            newTail->setNext(nullptr);
+            delete this->tail;
+            this->tail = newTail;
+            this->size--;
+        }
+        else
+        {
+            Node<T> *preCurrNode = this->getNode(index - 1);
+            Node<T> *currNextNode = preCurrNode->getNext()->getNext();
+            delete preCurrNode->getNext();
+            preCurrNode->setNext(currNextNode);
+            this->size--;
+        }
+    }
 
     void clear()
     {
-        Node<T> **pNodes = new Node<T> *[this->size];
-        Node<T> *c = this->head;
-
-        std::size_t i = 0;
-        while (c != nullptr)
+        while (this->size != 0)
         {
-            pNodes[i] = c;
-            c = c->next();
-            i++;
+            delete this->popNode();
         }
-        delete[] pNodes;
-
         this->head = nullptr;
         this->tail = nullptr;
         this->size = 0;
