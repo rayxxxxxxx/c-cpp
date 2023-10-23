@@ -3,6 +3,7 @@
 
 #include <stdexcept>
 #include <stack>
+#include <unordered_set>
 
 #include "binaryTree/node.hpp"
 
@@ -17,7 +18,7 @@ public:
     Tree(const T &data)
     {
         this->root = new Node<T>(data);
-        this->size++;
+        this->size = 1;
     }
 
     ~Tree() {}
@@ -59,7 +60,45 @@ public:
         }
     }
 
-    Node<T> *getAll() const {}
+    T *getAll() const
+    {
+        std::unordered_set<Node<T> *> visited = std::unordered_set<Node<T> *>();
+        std::stack<Node<T> *> nodeStack = std::stack<Node<T> *>();
+        T *data = new T[this->size];
+        size_t i = 0;
+
+        Node<T> *currNode = this->root;
+        while (visited.count(this->root) != 1)
+        {
+            if (visited.count(currNode) == 1)
+            {
+                data[i] = currNode->getData();
+                i++;
+                currNode = nodeStack.top();
+                nodeStack.pop();
+                continue;
+            }
+
+            if (currNode->getLeft() != nullptr && visited.count(currNode->getLeft()) == 0)
+            {
+                nodeStack.push(currNode);
+                currNode = currNode->getLeft();
+                continue;
+            }
+
+            if (currNode->getRight() != nullptr && visited.count(currNode->getRight()) == 0)
+            {
+                nodeStack.push(currNode);
+                currNode = currNode->getRight();
+                continue;
+            }
+
+            visited.insert(currNode);
+            continue;
+        }
+        data[i] = this->root->getData();
+        return data;
+    }
 
     void add(T data)
     {
@@ -76,7 +115,8 @@ public:
                 if (currNode->getLeft() == nullptr)
                 {
                     currNode->setLeft(new Node<T>(data));
-                    return;
+                    this->size++;
+                    break;
                 }
                 currNode = currNode->getLeft();
                 continue;
@@ -87,7 +127,8 @@ public:
                 if (currNode->getRight() == nullptr)
                 {
                     currNode->setRight(new Node<T>(data));
-                    return;
+                    this->size++;
+                    break;
                 }
                 currNode = currNode->getRight();
                 continue;
