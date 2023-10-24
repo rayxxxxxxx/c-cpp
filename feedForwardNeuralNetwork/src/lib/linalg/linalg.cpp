@@ -331,6 +331,23 @@ double **linalg::Clip(double **m, double a, double b, int r, int c)
     return newmtrx;
 }
 
+double **linalg::Mult(double *v1, double *v2, int n1, int n2)
+{
+    double **newmtrx = new double *[n1];
+    for (int i = 0; i < n1; i++)
+    {
+        newmtrx[i] = new double[n2];
+    }
+    for (int i = 0; i < n1; i++)
+    {
+        for (int j = 0; j < n2; j++)
+        {
+            newmtrx[i][j] = v1[i] * v2[j];
+        }
+    }
+    return newmtrx;
+}
+
 double **linalg::Mult(double **m1, double **m2, int r1, int c1, int r2, int c2)
 {
     double **newmtrx = new double *[r1];

@@ -36,11 +36,11 @@ double *vct::Full(int n, double x)
 
 double *vct::Random(int n, int a, int b)
 {
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     double *newvct = new double[n];
     for (int i = 0; i < n; i++)
     {
-        newvct[i] = a + rand() % (b - a);
+        newvct[i] = a + std::rand() % (b - a);
     }
     return newvct;
 }

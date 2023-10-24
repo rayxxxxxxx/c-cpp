@@ -35,6 +35,7 @@ namespace linalg
     double **Abs(double **m, int r, int c);
     double **Clip(double **m, double a, double b, int r, int c);
 
+    double **Mult(double *v1, double *v2, int n1, int n2);
     double **Mult(double **m1, double **m2, int r1, int c1, int r2, int c2);
 
     double *Dot(double **m, double *v, int r, int c);

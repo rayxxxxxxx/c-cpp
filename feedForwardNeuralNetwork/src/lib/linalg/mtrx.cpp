@@ -125,6 +125,15 @@ double **mtrx::Copy(double **m, int r, int c)
     return newmtrx;
 }
 
+void mtrx::Delete(double **m, int r, int c)
+{
+    for (size_t i = 0; i < r; i++)
+    {
+        delete[] m[i];
+    }
+    delete m;
+}
+
 double **mtrx::Transpose(double **m, int r, int c)
 {
     double **newmtrx = new double *[c];

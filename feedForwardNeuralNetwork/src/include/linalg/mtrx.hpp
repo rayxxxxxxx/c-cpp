@@ -12,6 +12,7 @@ namespace mtrx
     double **Diag(int n, double x);
     double **Random(int r, int c, int a, int b);
     double **Copy(double **m, int r, int c);
+    void Delete(double **m, int r, int c);
 
     double **Transpose(double **m, int r, int c);
 

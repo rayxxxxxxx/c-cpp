@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <chrono>
+#include <thread>
 #include <fstream>
 #include <limits>
 #include <string>
@@ -30,23 +32,22 @@ int main(int argc, char const *argv[])
     size_t testSize = (size_t)(testPercentage * dataSize);
     size_t trainSize = dataSize - testSize;
 
+    double **xData = new double *[dataSize];
+    double **yData = new double *[dataSize];
+
+    double **xTrain = new double *[trainSize];
+    double **yTrain = new double *[trainSize];
+
+    double **xTest = new double *[testSize];
+    double **yTest = new double *[testSize];
+
+    dataset::loadCsv("../data/iris_mapped.csv", xData, yData, dataSize, nIn, nOut);
+    dataset::shuffle(xData, yData, dataSize);
+    dataset::divide(xData, yData, xTrain, yTrain, xTest, yTest, testPercentage, dataSize);
+
     FNN model = FNN(nIn, nOut);
-    double *y = model.predict(vct::Ones(nIn));
-    printVector(y, nOut);
-    std::cout << model.getError(vct::Ones(nIn), vct::Full(nIn, 1)) << std::endl;
-
-    double **dataX = new double *[dataSize];
-    double **dataY = new double *[dataSize];
-
-    double **trainX = new double *[trainSize];
-    double **trainY = new double *[trainSize];
-
-    double **testX = new double *[testSize];
-    double **testY = new double *[testSize];
-
-    dataset::loadCsv("../data/iris_mapped.csv", dataX, dataY, dataSize, nIn, nOut);
-    dataset::shuffle(dataX, dataY, dataSize);
-    dataset::divide(dataX, dataY, trainX, trainY, testX, testY, testPercentage, dataSize);
+    model.train(xTrain, yTrain, xTest, yTest, dataSize, testSize, 0.01, 0.01);
+    std::cout << model.getError(xTest, yTest, testSize) << std::endl;
 
     return 0;
 }

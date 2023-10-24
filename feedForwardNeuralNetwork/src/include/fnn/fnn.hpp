@@ -16,11 +16,12 @@ private:
     void backPropagation(double *xTest, double *yTest);
 
 public:
-    FNN(int inputSize, int outputSize);
+    FNN(size_t inputSize, size_t outputSize);
 
     double *predict(double *x) const;
-    void train(double **xTrain, double **yTrain, double **xTest, double **yTest, int batchesNum, double learningRate, double err);
+    void train(double **xTrain, double **yTrain, double **xTest, double **yTest, size_t size, size_t testSize, double learningRate, double err);
     double getError(double *xTest, double *yTest);
+    double getError(double **xTest, double **yTest, size_t size);
 };
 
 #endif
