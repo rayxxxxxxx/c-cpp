@@ -12,6 +12,7 @@ namespace matrix
     double **Full(int r, int c, double x);
     double **Diag(int n, double x);
     double **Copy(double **m, int r, int c);
+    void Delete(double **m, int r);
 
     double Min(double **m, int r, int c);
     double Max(double **m, int r, int c);
@@ -23,7 +24,7 @@ namespace matrix
     double **Abs(double **m, int r, int c);
     double **Clip(double **m, double a, double b, int r, int c);
     double **Transpose(double **m, int r, int c);
-    double **InverseMatrix(double **m, int r, int c); // TODO
+    double **InverseMatrix(double **m, int r, int c);
     double **LTriangle(double **m, int r, int c);
     double **UTriangle(double **m, int r, int c);
     double ***LU(double **m, int r, int c);
@@ -50,7 +51,7 @@ public:
 
     int nrow() const;
     int ncol() const;
-    double **getM() const;
+    double **ptr() const;
 
     static vct Row(const mtrx &m, int k);
     static vct Col(const mtrx &m, int k);
@@ -59,6 +60,7 @@ public:
     static mtrx Full(int r, int c, double x);
     static mtrx Diag(int n, double x);
     static mtrx Copy(const mtrx &m);
+    static void Delete(mtrx &m);
 
     static double Min(const mtrx &m);
     static double Max(const mtrx &m);
@@ -70,7 +72,7 @@ public:
     static mtrx Abs(const mtrx &m);
     static mtrx Clip(const mtrx &m, double a, double b);
     static mtrx Transpose(const mtrx &m);
-    static mtrx InverseMatrix(const mtrx &m); // TODO
+    static mtrx InverseMatrix(const mtrx &m);
     static mtrx LTriangle(const mtrx &m);
     static mtrx UTriangle(const mtrx &m);
     static mtrx *LU(const mtrx &m);
