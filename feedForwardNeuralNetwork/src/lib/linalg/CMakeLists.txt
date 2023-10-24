@@ -1,8 +1,8 @@
 set(src ${CMAKE_SOURCE_DIR}/src)
 
 add_library(Linalg SHARED
-    ${src}/lib/linalg/vct.cpp
-    ${src}/lib/linalg/mtrx.cpp
+    ${src}/lib/linalg/vector.cpp
+    ${src}/lib/linalg/matrix.cpp
     ${src}/lib/linalg/linalg.cpp
 )
 

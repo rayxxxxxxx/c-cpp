@@ -1,15 +1,9 @@
 #include <stdlib.h>
-#include <chrono>
-#include <thread>
-#include <fstream>
-#include <limits>
 #include <string>
 #include <vector>
 #include <iostream>
 #include <iomanip>
 
-#include "linalg/vct.hpp"
-#include "linalg/mtrx.hpp"
 #include "linalg/linalg.hpp"
 #include "fnn/fnn.hpp"
 #include "fnn/dataset.hpp"
@@ -19,27 +13,23 @@ void println(std::string str);
 void printVector(double *v, int n);
 void printMatrix(double **m, int r, int c);
 
-std::vector<std::string> split(std::string str, std::string delimeter);
-
-void readIrisData(double **outDataX, double **outDataY);
-
 int main(int argc, char const *argv[])
 {
     size_t nIn = 4;
     size_t nOut = 1;
     size_t dataSize = 150;
-    double testPercentage = 0.2;
+    double testPercentage = 0.3;
     size_t testSize = (size_t)(testPercentage * dataSize);
     size_t trainSize = dataSize - testSize;
 
-    double **xData = new double *[dataSize];
-    double **yData = new double *[dataSize];
+    vct *xData = new vct[dataSize];
+    vct *yData = new vct[dataSize];
 
-    double **xTrain = new double *[trainSize];
-    double **yTrain = new double *[trainSize];
+    vct *xTrain = new vct[trainSize];
+    vct *yTrain = new vct[trainSize];
 
-    double **xTest = new double *[testSize];
-    double **yTest = new double *[testSize];
+    vct *xTest = new vct[testSize];
+    vct *yTest = new vct[testSize];
 
     dataset::loadCsv("../data/iris_mapped.csv", xData, yData, dataSize, nIn, nOut);
     dataset::shuffle(xData, yData, dataSize);

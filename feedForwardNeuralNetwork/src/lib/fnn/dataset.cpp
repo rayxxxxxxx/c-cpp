@@ -6,6 +6,7 @@
 #include <fstream>
 
 #include "fnn/dataset.hpp"
+#include "linalg/linalg.hpp"
 
 std::vector<std::string> splitStr(std::string str, std::string delimeter)
 {
@@ -21,7 +22,7 @@ std::vector<std::string> splitStr(std::string str, std::string delimeter)
     return result;
 }
 
-void dataset::loadCsv(std::string filePath, double **outX, double **outY, size_t size, size_t nIn, size_t nOut, int skip)
+void dataset::loadCsv(std::string filePath, vct *outX, vct *outY, size_t size, size_t nIn, size_t nOut, int skip)
 {
     std::string fp = std::string(filePath);
     std::ifstream file = std::ifstream();
@@ -42,13 +43,13 @@ void dataset::loadCsv(std::string filePath, double **outX, double **outY, size_t
         std::getline(file, line);
         splitted = splitStr(line, ",");
 
-        outX[i] = new double[nIn];
+        outX[i] = vct::Zeros(nIn);
         for (size_t j = 0; j < nIn; j++)
         {
             outX[i][j] = std::atof(&splitted[j][0]);
         }
 
-        outY[i] = new double[nOut];
+        outY[i] = vct::Zeros(nOut);
         for (size_t j = 0; j < nOut; j++)
         {
             outY[i][j] = std::atof(&splitted[nIn + j][0]);
@@ -59,7 +60,7 @@ void dataset::loadCsv(std::string filePath, double **outX, double **outY, size_t
     file.close();
 }
 
-void dataset::divide(double **x, double **y, double **trX, double **trY, double **tsX, double **tsY, double frac, size_t size)
+void dataset::divide(vct *x, vct *y, vct *trX, vct *trY, vct *tsX, vct *tsY, double frac, size_t size)
 {
     size_t testSize = (size_t)(frac * size);
     size_t trainSize = size - testSize;
@@ -79,7 +80,7 @@ void dataset::divide(double **x, double **y, double **trX, double **trY, double 
     }
 }
 
-void dataset::shuffle(double **outX, double **outY, size_t size)
+void dataset::shuffle(vct *outX, vct *outY, size_t size)
 {
     std::srand(time(NULL));
     for (size_t i = 0; i < 2 * size; i++)

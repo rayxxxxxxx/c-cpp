@@ -1,6 +1,8 @@
 #ifndef FNN_HPP
 #define FNN_HPP
 
+#include "linalg/linalg.hpp"
+
 double F(double x);
 double dF(double x);
 
@@ -10,18 +12,18 @@ private:
     size_t nIn;
     size_t nOut;
 
-    double **w;
-    double *b;
+    mtrx w;
+    vct b;
 
-    void backPropagation(double *xTest, double *yTest);
+    void backPropagation(vct xTest, vct yTest);
 
 public:
     FNN(size_t inputSize, size_t outputSize);
 
-    double *predict(double *x) const;
-    void train(double **xTrain, double **yTrain, double **xTest, double **yTest, size_t size, size_t testSize, double learningRate, double err);
-    double getError(double *xTest, double *yTest);
-    double getError(double **xTest, double **yTest, size_t size);
+    vct predict(vct x) const;
+    void train(vct *xTrain, vct *yTrain, vct *xTest, vct *yTest, size_t size, size_t testSize, double learningRate = 1e-2, double err = 1e-2);
+    double getError(vct xTest, vct yTest);
+    double getError(vct *xTest, vct *yTest, size_t size);
 };
 
 #endif
