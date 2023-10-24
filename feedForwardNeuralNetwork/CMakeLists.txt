@@ -5,7 +5,7 @@ project(app)
 set(src ${CMAKE_SOURCE_DIR}/src)
 
 add_subdirectory(${src}/lib/linalg)
-add_subdirectory(${src}/lib)
+add_subdirectory(${src}/lib/fnn)
 
 add_executable(app 
     ${src}/main.cpp

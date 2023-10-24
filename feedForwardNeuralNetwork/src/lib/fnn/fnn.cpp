@@ -3,9 +3,10 @@
 #include "linalg/vct.hpp"
 #include "linalg/mtrx.hpp"
 #include "linalg/linalg.hpp"
-#include "fnn.hpp"
+#include "fnn/fnn.hpp"
 
-double F(double x)
+double
+F(double x)
 {
     return 1.0 / (1 + exp(-x));
 }

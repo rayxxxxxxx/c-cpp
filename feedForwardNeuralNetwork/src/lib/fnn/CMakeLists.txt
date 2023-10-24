@@ -1,7 +1,8 @@
 set(src ${CMAKE_SOURCE_DIR}/src)
 
 add_library(FNN SHARED
-    ${src}/lib/fnn.cpp
+    ${src}/lib/fnn/fnn.cpp
+    ${src}/lib/fnn/dataset.cpp
 )
 
 target_link_libraries(FNN PRIVATE

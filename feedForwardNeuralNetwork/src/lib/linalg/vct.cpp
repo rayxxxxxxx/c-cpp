@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 
 #include "linalg/vct.hpp"
 
@@ -29,6 +30,27 @@ double *vct::Full(int n, double x)
     for (int i = 0; i < n; i++)
     {
         newvct[i] = x;
+    }
+    return newvct;
+}
+
+double *vct::Random(int n, int a, int b)
+{
+    srand(time(NULL));
+    double *newvct = new double[n];
+    for (int i = 0; i < n; i++)
+    {
+        newvct[i] = a + rand() % (b - a);
+    }
+    return newvct;
+}
+
+double *vct::Copy(double *v, int n)
+{
+    double *newvct = new double[n];
+    for (int i = 0; i < n; i++)
+    {
+        newvct[i] = v[i];
     }
     return newvct;
 }
@@ -69,16 +91,6 @@ double *vct::Scale(double *v, double x, int n)
     for (int i = 0; i < n; i++)
     {
         newvct[i] = x * v[i];
-    }
-    return newvct;
-}
-
-double *vct::Copy(double *v, int n)
-{
-    double *newvct = new double[n];
-    for (int i = 0; i < n; i++)
-    {
-        newvct[i] = v[i];
     }
     return newvct;
 }

@@ -6,6 +6,7 @@ namespace vct
     double *Zeros(int n);
     double *Ones(int n);
     double *Full(int n, double x);
+    double *Random(int n, int a, int b);
     double *Copy(double *v, int n);
 
     double Len(double *v, int n);
