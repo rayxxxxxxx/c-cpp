@@ -15,13 +15,13 @@ private:
     mtrx w;
     vct b;
 
-    void backPropagation(vct xTest, vct yTest);
+    void backPropagation(vct xTest, vct yTest, mtrx &grads, double lr);
 
 public:
     FNN(size_t inputSize, size_t outputSize);
 
     vct predict(vct x) const;
-    void train(vct *xTrain, vct *yTrain, vct *xTest, vct *yTest, size_t size, size_t testSize, double learningRate = 1e-2, double err = 1e-2);
+    void train(vct *xTrain, vct *yTrain, vct *xTest, vct *yTest, size_t size, size_t testSize, double lr = 1e-2, double err = 1e-2);
     double getError(vct xTest, vct yTest);
     double getError(vct *xTest, vct *yTest, size_t size);
 };

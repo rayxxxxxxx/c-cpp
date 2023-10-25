@@ -1,87 +1,82 @@
 #ifndef MATRIX_HPP
 #define MATRIX_HPP
 
-#include "./vector.hpp"
+#include "linalg/vector.hpp"
 
 namespace matrix
 {
-    double *Row(double **m, int k, int r, int c);
-    double *Col(double **m, int k, int r, int c);
-    double **Zeros(int r, int c);
-    double **Ones(int r, int c);
-    double **Full(int r, int c, double x);
-    double **Diag(int n, double x);
-    double **Copy(double **m, int r, int c);
-    void Delete(double **m, int r);
+    double *row(double **m, size_t k, size_t r, size_t c);
+    double *col(double **m, size_t k, size_t r, size_t c);
+    double **zeros(size_t r, size_t c);
+    double **ones(size_t r, size_t c);
+    double **full(size_t r, size_t c, double x);
+    double **diag(size_t n, double x);
+    double **random(size_t r, size_t c, double a, double b);
+    double **copy(double **m, size_t r, size_t c);
+    void Delete(double **m, size_t r);
 
-    double Min(double **m, int r, int c);
-    double Max(double **m, int r, int c);
-    double Mean(double **m, int r, int c);
-    double Sum(double **m, int r, int c);
-    double Prod(double **m, int r, int c);
-    double Det(double **m, int r, int c);
+    double det(double **m, size_t r, size_t c);
 
-    double **Abs(double **m, int r, int c);
-    double **Clip(double **m, double a, double b, int r, int c);
-    double **Transpose(double **m, int r, int c);
-    double **InverseMatrix(double **m, int r, int c);
-    double **LTriangle(double **m, int r, int c);
-    double **UTriangle(double **m, int r, int c);
-    double ***LU(double **m, int r, int c);
+    double **reciprocal(double **m, size_t r, size_t c);
+    double **transpose(double **m, size_t r, size_t c);
+    double **inverse(double **m, size_t r, size_t c);
+    double **LTriangle(double **m, size_t r, size_t c);
+    double **UTriangle(double **m, size_t r, size_t c);
 
-    double **Add(double **m, double x, int r, int c);
-    double **Scale(double **m, double x, int r, int c);
-    double **Add(double **m1, double **m2, int r, int c);
-    double **Sub(double **m1, double **m2, int r, int c);
-    double **Mult(double **m1, double **m2, int r1, int c1, int r2, int c2);
+    double ***LU(double **m, size_t r, size_t c);
+
+    double **add(double **m, double x, size_t r, size_t c);
+    double **sub(double **m, double x, size_t r, size_t c);
+    double **scale(double **m, double x, size_t r, size_t c);
+
+    double **add(double **m1, double **m2, size_t r, size_t c);
+    double **sub(double **m1, double **m2, size_t r, size_t c);
+    double **scale(double **m1, double **m2, size_t r, size_t c);
 }
 
 class mtrx
 {
 private:
-    int r;
-    int c;
+    size_t r;
+    size_t c;
     double **m;
 
 public:
     mtrx();
-    mtrx(double **m, int r, int c);
+    mtrx(double **m, size_t r, size_t c);
     mtrx(const mtrx &m);
     ~mtrx();
 
-    int nrow() const;
-    int ncol() const;
+    size_t nrow() const;
+    size_t ncol() const;
     double **ptr() const;
 
-    static vct Row(const mtrx &m, int k);
-    static vct Col(const mtrx &m, int k);
-    static mtrx Zeros(int r, int c);
-    static mtrx Ones(int r, int c);
-    static mtrx Full(int r, int c, double x);
-    static mtrx Diag(int n, double x);
-    static mtrx Copy(const mtrx &m);
+    static vct row(const mtrx &m, size_t k);
+    static vct col(const mtrx &m, size_t k);
+    static mtrx zeros(size_t r, size_t c);
+    static mtrx ones(size_t r, size_t c);
+    static mtrx full(size_t r, size_t c, double x);
+    static mtrx diag(size_t n, double x);
+    static mtrx random(size_t r, size_t c, double a, double b);
+    static mtrx copy(const mtrx &m);
     static void Delete(mtrx &m);
 
-    static double Min(const mtrx &m);
-    static double Max(const mtrx &m);
-    static double Mean(const mtrx &m);
-    static double Sum(const mtrx &m);
-    static double Prod(const mtrx &m);
-    static double Det(const mtrx &m);
+    static double min(const mtrx &m);
+    static double max(const mtrx &m);
+    static double mean(const mtrx &m);
+    static double sum(const mtrx &m);
+    static double prod(const mtrx &m);
+    static double det(const mtrx &m);
 
-    static mtrx Abs(const mtrx &m);
-    static mtrx Clip(const mtrx &m, double a, double b);
-    static mtrx Transpose(const mtrx &m);
-    static mtrx InverseMatrix(const mtrx &m);
+    static mtrx reciprocal(const mtrx &m);
+    static mtrx transpose(const mtrx &m);
+    static mtrx inverse(const mtrx &m);
     static mtrx LTriangle(const mtrx &m);
     static mtrx UTriangle(const mtrx &m);
     static mtrx *LU(const mtrx &m);
 
-    static mtrx Add(const mtrx &m, double x);
-    static mtrx Scale(const mtrx &m, double x);
-
     mtrx &operator=(const mtrx &m);
-    double *operator[](int index) const;
+    double *operator[](size_t index) const;
 
     mtrx &operator+=(const double &x);
     mtrx &operator-=(const double &x);
@@ -91,24 +86,37 @@ public:
     mtrx &operator+=(const mtrx &m);
     mtrx &operator-=(const mtrx &m);
     mtrx &operator*=(const mtrx &m);
+    mtrx &operator/=(const mtrx &m);
 
-    friend mtrx operator+(mtrx m1, const double &x);
-    friend mtrx operator-(mtrx m1, const double &x);
-    friend mtrx operator*(mtrx m1, const double &x);
-    friend mtrx operator/(mtrx m1, const double &x);
+    friend mtrx operator+(const mtrx &m, const double &x);
+    friend mtrx operator-(const mtrx &m, const double &x);
+    friend mtrx operator*(const mtrx &m, const double &x);
+    friend mtrx operator/(const mtrx &m, const double &x);
 
-    friend mtrx operator+(mtrx m1, const mtrx &m2);
-    friend mtrx operator-(mtrx m1, const mtrx &m2);
-    friend mtrx operator*(mtrx m1, const mtrx &m2);
+    friend mtrx operator+(const double &x, const mtrx &m);
+    friend mtrx operator-(const double &x, const mtrx &m);
+    friend mtrx operator*(const double &x, const mtrx &m);
+    friend mtrx operator/(const double &x, const mtrx &m);
+
+    friend mtrx operator+(const mtrx &m1, const mtrx &m2);
+    friend mtrx operator-(const mtrx &m1, const mtrx &m2);
+    friend mtrx operator*(const mtrx &m1, const mtrx &m2);
+    friend mtrx operator/(const mtrx &m1, const mtrx &m2);
 };
 
-mtrx operator+(mtrx m1, const double &x);
-mtrx operator-(mtrx m1, const double &x);
-mtrx operator*(mtrx m1, const double &x);
-mtrx operator/(mtrx m1, const double &x);
+mtrx operator+(const mtrx &m, const double &x);
+mtrx operator-(const mtrx &m, const double &x);
+mtrx operator*(const mtrx &m, const double &x);
+mtrx operator/(const mtrx &m, const double &x);
 
-mtrx operator+(mtrx m1, const mtrx &m2);
-mtrx operator-(mtrx m1, const mtrx &m2);
-mtrx operator*(mtrx m1, const mtrx &m2);
+mtrx operator+(const double &x, const mtrx &m);
+mtrx operator-(const double &x, const mtrx &m);
+mtrx operator*(const double &x, const mtrx &m);
+mtrx operator/(const double &x, const mtrx &m);
+
+mtrx operator+(const mtrx &m1, const mtrx &m2);
+mtrx operator-(const mtrx &m1, const mtrx &m2);
+mtrx operator*(const mtrx &m1, const mtrx &m2);
+mtrx operator/(const mtrx &m1, const mtrx &m2);
 
 #endif

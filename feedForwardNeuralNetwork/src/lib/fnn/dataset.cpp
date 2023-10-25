@@ -22,7 +22,7 @@ std::vector<std::string> splitStr(std::string str, std::string delimeter)
     return result;
 }
 
-void dataset::loadCsv(std::string filePath, vct *outX, vct *outY, size_t size, size_t nIn, size_t nOut, int skip)
+void dataset::loadCsv(std::string filePath, vct *outX, vct *outY, size_t size, size_t nIn, size_t nOut, size_t skip)
 {
     std::string fp = std::string(filePath);
     std::ifstream file = std::ifstream();
@@ -36,20 +36,20 @@ void dataset::loadCsv(std::string filePath, vct *outX, vct *outY, size_t size, s
         file.ignore(MAX_SIZE, '\n');
     }
 
-    int i = 0;
+    size_t i = 0;
     file.open(fp);
     while (!file.eof())
     {
         std::getline(file, line);
         splitted = splitStr(line, ",");
 
-        outX[i] = vct::Zeros(nIn);
+        outX[i] = vct::zeros(nIn);
         for (size_t j = 0; j < nIn; j++)
         {
             outX[i][j] = std::atof(&splitted[j][0]);
         }
 
-        outY[i] = vct::Zeros(nOut);
+        outY[i] = vct::zeros(nOut);
         for (size_t j = 0; j < nOut; j++)
         {
             outY[i][j] = std::atof(&splitted[nIn + j][0]);

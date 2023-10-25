@@ -6,81 +6,81 @@
 
 namespace linalg
 {
-    double Min(double *v, int n);
-    double Max(double *v, int n);
-    double Mean(double *v, int n);
-    double Sum(double *v, int n);
-    double Prod(double *v, int n);
+    double min(double *v, size_t n);
+    double max(double *v, size_t n);
+    double mean(double *v, size_t n);
+    double sum(double *v, size_t n);
+    double prod(double *v, size_t n);
 
-    double *Abs(double *v, int n);
-    double *Clip(double *v, double a, double b, int n);
-    double *Lerp(double *v1, double *v2, double t, int n);
+    double *abs(double *v, size_t n);
+    double *clip(double *v, double a, double b, size_t n);
+    double *lerp(double *v1, double *v2, double t, size_t n);
 
-    double *Square(double *v, int n);
-    double *Pow(double *v, double x, int n);
-    double *Sqrt(double *v, int n);
-    double *Exp(double *v, int n);
-    double *Apply(double (*fnc)(double), double *v, int n);
+    double *square(double *v, size_t n);
+    double *pow(double *v, double x, size_t n);
+    double *sqrt(double *v, size_t n);
+    double *exp(double *v, size_t n);
+    double *map(double (*fnc)(double), double *v, size_t n);
 
-    double Min(double **m, int r, int c);
-    double Max(double **m, int r, int c);
-    double Mean(double **m, int r, int c);
-    double Sum(double **m, int r, int c);
-    double Prod(double **m, int r, int c);
+    double min(double **m, size_t r, size_t c);
+    double max(double **m, size_t r, size_t c);
+    double mean(double **m, size_t r, size_t c);
+    double sum(double **m, size_t r, size_t c);
+    double prod(double **m, size_t r, size_t c);
 
-    double **Abs(double **m, int r, int c);
-    double **Clip(double **m, double a, double b, int r, int c);
-    double **Lerp(double **m1, double **m2, int r, int c, double t);
+    double **abs(double **m, size_t r, size_t c);
+    double **clip(double **m, double a, double b, size_t r, size_t c);
+    double **lerp(double **m1, double **m2, size_t r, size_t c, double t);
 
-    double **Square(double **m, int r, int c);
-    double **Pow(double **m, double x, int r, int c);
-    double **Sqrt(double **m, int r, int c);
-    double **Exp(double **m, int r, int c);
-    double **Apply(double (*fnc)(double), double **m, int r, int c);
+    double **square(double **m, size_t r, size_t c);
+    double **pow(double **m, double x, size_t r, size_t c);
+    double **sqrt(double **m, size_t r, size_t c);
+    double **exp(double **m, size_t r, size_t c);
+    double **map(double (*fnc)(double), double **m, size_t r, size_t c);
 
-    double Dot(double *v1, double *v2, int n);
-    double *Dot(double **m, double *v, int r, int c);
-    double **Mult(double *v1, double *v2, int n1, int n2);
-    double **Mult(double **m1, double **m2, int r1, int c1, int r2, int c2);
-    double *Solve(double **A, double *B, int r, int c);
+    double dot(double *v1, double *v2, size_t n);
+    double *dot(double **m, double *v, size_t r, size_t c);
+    double **mul(double *v1, double *v2, size_t n1, size_t n2);
+    double **mul(double **m1, double **m2, size_t r1, size_t c1, size_t r2, size_t c2);
+    double *solve(double **A, double *B, size_t r, size_t c);
 
-    double Min(const vct &v);
-    double Max(const vct &v);
-    double Mean(const vct &v);
-    double Sum(const vct &v);
-    double Prod(const vct &v);
+    double min(const vct &v);
+    double max(const vct &v);
+    double mean(const vct &v);
+    double sum(const vct &v);
+    double prod(const vct &v);
 
-    vct Abs(const vct &v);
-    vct Clip(const vct &v, double a, double b);
-    vct Lerp(const vct &v1, const vct &v2, double t);
+    vct abs(const vct &v);
+    vct clip(const vct &v, double a, double b);
+    vct lerp(const vct &v1, const vct &v2, double t);
 
-    vct Square(const vct &v);
-    vct Pow(const vct &v, double x);
-    vct Sqrt(const vct &v);
-    vct Exp(const vct &v);
-    vct Apply(double (*fnc)(double), const vct &v);
+    vct square(const vct &v);
+    vct pow(const vct &v, double x);
+    vct sqrt(const vct &v);
+    vct exp(const vct &v);
+    vct map(double (*fnc)(double), const vct &v);
 
-    double Min(const mtrx &m);
-    double Max(const mtrx &m);
-    double Mean(const mtrx &m);
-    double Sum(const mtrx &m);
-    double Prod(const mtrx &m);
+    double min(const mtrx &m);
+    double max(const mtrx &m);
+    double mean(const mtrx &m);
+    double sum(const mtrx &m);
+    double prod(const mtrx &m);
 
-    mtrx Abs(const mtrx &m);
-    mtrx Clip(const mtrx &m, double a, double b);
-    mtrx Lerp(const mtrx &m1, const mtrx &m2, double t);
+    mtrx abs(const mtrx &m);
+    mtrx clip(const mtrx &m, double a, double b);
+    mtrx lerp(const mtrx &m1, const mtrx &m2, double t);
 
-    mtrx Square(const mtrx &m);
-    mtrx Pow(const mtrx &m, double x);
-    mtrx Sqrt(const mtrx &m);
-    mtrx Exp(const mtrx &m);
-    mtrx Apply(double (*fnc)(double), const mtrx &m);
+    mtrx square(const mtrx &m);
+    mtrx pow(const mtrx &m, double x);
+    mtrx sqrt(const mtrx &m);
+    mtrx exp(const mtrx &m);
+    mtrx map(double (*fnc)(double), const mtrx &m);
 
-    double Dot(const vct &v1, const vct &v2);
-    vct Dot(const mtrx &m, const vct &v);
-    mtrx Mult(const vct &v1, const vct &v2);
-    mtrx Mult(const mtrx &m1, const mtrx &m2);
-    vct Solve(const mtrx &A, const vct &B);
+    double dot(const vct &v1, const vct &v2);
+    vct dot(const mtrx &m, const vct &v);
+    mtrx mul(const vct &v1, const vct &v2);
+    mtrx mul(const mtrx &m1, const mtrx &m2);
+    vct solve(const mtrx &A, const vct &B);
 }
 
 #endif

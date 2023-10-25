@@ -5,10 +5,11 @@
 #include "fnn/fnn.hpp"
 #include "fnn/dataset.hpp"
 
-double
-F(double x)
+namespace la = linalg;
+
+double F(double x)
 {
-    return 1.0 / (1 + exp(-x));
+    return 1.0 / (1 + std::exp(-x));
 }
 
 double dF(double x)
@@ -20,31 +21,42 @@ FNN::FNN(size_t inputSize, size_t outputSize)
 {
     this->nIn = inputSize;
     this->nOut = outputSize;
-    this->w = mtrx::Random(outputSize, inputSize, -1, 2);
-    this->b = vct::Zeros(outputSize);
+    this->w = mtrx::random(outputSize, inputSize, -1.0, 1.0);
+    this->b = vct::zeros(outputSize);
 }
 
 vct FNN::predict(vct x) const
 {
-    return linalg::Apply(F, linalg::Dot(w, x));
+    return la::map(F, la::dot(w, x));
 }
 
-void FNN::train(vct *xTrain, vct *yTrain, vct *xTest, vct *yTest, size_t size, size_t testSize, double learningRate, double err)
+double FNN::getError(vct xTest, vct yTest)
+{
+    vct y = this->predict(xTest);
+    return la::sum(la::square(yTest - y)) / nOut;
+}
+
+double FNN::getError(vct *xTest, vct *yTest, size_t size)
+{
+    double err = 0.0;
+    for (size_t i = 0; i < size; i++)
+    {
+        err += this->getError(xTest[i], yTest[i]);
+    }
+    return err / size;
+}
+
+void FNN::train(vct *xTrain, vct *yTrain, vct *xTest, vct *yTest, size_t size, size_t testSize, double lr, double err)
 {
     size_t trainSize = size - testSize;
     double currErr = this->getError(xTest, yTest, testSize);
     size_t j = 0;
     while (currErr > err)
     {
-        mtrx grads = mtrx::Zeros(nOut, nIn);
+        mtrx grads = mtrx::zeros(nOut, nIn);
         for (size_t i = 0; i < trainSize; i++)
         {
-            vct a = linalg::Dot(w, xTrain[i]);
-            vct y = linalg::Apply(F, a);
-            vct deltaY = yTrain[i] - y;
-            vct dFa = linalg::Apply(dF, a);
-
-            grads += linalg::Mult(deltaY * dFa, xTrain[i]) * (-learningRate);
+            this->backPropagation(xTrain[i], yTrain[i], grads, lr);
         }
         w -= grads;
         grads *= 0;
@@ -56,20 +68,11 @@ void FNN::train(vct *xTrain, vct *yTrain, vct *xTest, vct *yTest, size_t size, s
     }
 }
 
-void FNN::backPropagation(vct xTest, vct yTest) {}
-
-double FNN::getError(vct xTest, vct yTest)
+void FNN::backPropagation(vct xTrain, vct yTrain, mtrx &grads, double lr)
 {
-    vct y = this->predict(xTest);
-    return linalg::Sum(linalg::Square(yTest - y)) / nOut;
-}
-
-double FNN::getError(vct *xTest, vct *yTest, size_t size)
-{
-    double err = 0.0;
-    for (size_t i = 0; i < size; i++)
-    {
-        err += this->getError(xTest[i], yTest[i]);
-    }
-    return err / size;
+    vct a = la::dot(w, xTrain);
+    vct y = la::map(F, a);
+    vct deltaY = yTrain - y;
+    vct dFa = la::map(dF, a);
+    grads += la::mul(deltaY * dFa, xTrain) * (-lr);
 }

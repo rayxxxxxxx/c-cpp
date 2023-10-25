@@ -10,15 +10,15 @@
 
 void print(std::string str);
 void println(std::string str);
-void printVector(double *v, int n);
-void printMatrix(double **m, int r, int c);
+void printVector(double *v, size_t n);
+void printMatrix(double **m, size_t r, size_t c);
 
 int main(int argc, char const *argv[])
 {
     size_t nIn = 4;
     size_t nOut = 1;
     size_t dataSize = 150;
-    double testPercentage = 0.3;
+    double testPercentage = 0.2;
     size_t testSize = (size_t)(testPercentage * dataSize);
     size_t trainSize = dataSize - testSize;
 
@@ -52,20 +52,20 @@ void println(std::string str)
     std::cout << str << std::endl;
 }
 
-void printVector(double *v, int n)
+void printVector(double *v, size_t n)
 {
-    for (int i = 0; i < n; i++)
+    for (size_t i = 0; i < n; i++)
     {
         std::cout << v[i] << " ";
     }
     std::cout << std::endl;
 }
 
-void printMatrix(double **m, int r, int c)
+void printMatrix(double **m, size_t r, size_t c)
 {
-    for (int i = 0; i < r; i++)
+    for (size_t i = 0; i < r; i++)
     {
-        for (int j = 0; j < c; j++)
+        for (size_t j = 0; j < c; j++)
         {
             std::cout << std::setprecision(3) << std::setw(5) << m[i][j] << " ";
         }

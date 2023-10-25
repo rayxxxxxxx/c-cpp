@@ -3,80 +3,97 @@
 
 namespace vector
 {
-    double *Zeros(int n);
-    double *Ones(int n);
-    double *Full(int n, double x);
-    double *Random(int n, int a, int b);
-    double *Copy(double *v, int n);
+    double *zeros(size_t n);
+    double *ones(size_t n);
+    double *full(size_t n, double x);
+    double *random(size_t n, double a, double b);
+    double *copy(double *v, size_t n);
+    double *Delete(double *v);
 
-    double Len(double *v, int n);
-    double Dist(double *v1, double *v2, int n);
+    double mag(double *v, size_t n);
+    double dist(double *v1, double *v2, size_t n);
 
-    double *Add(double *v, double x, int n);
-    double *Scale(double *v, double x, int n);
+    double *reciprocal(double *v, size_t n);
 
-    double *Add(double *v1, double *v2, int n);
-    double *Sub(double *v1, double *v2, int n);
-    double *Mult(double *v1, double *v2, int n);
-    double *Div(double *v1, double *v2, int n);
+    double *add(double *v, double x, size_t n);
+    double *sub(double *v, double x, size_t n);
+    double *scale(double *v, double x, size_t n);
+
+    double *add(double *v1, double *v2, size_t n);
+    double *sub(double *v1, double *v2, size_t n);
+    double *scale(double *v1, double *v2, size_t n);
+    double *div(double *v1, double *v2, size_t n);
 }
 
 class vct
 {
 private:
-    int n;
+    size_t n;
     double *p;
 
 public:
     vct();
-    vct(double *v, int n);
+    vct(double *v, size_t n);
     vct(const vct &v);
     ~vct();
 
-    int size() const;
+    size_t size() const;
     double *ptr() const;
 
-    static vct Zeros(int n);
-    static vct Ones(int n);
-    static vct Full(int n, double x);
-    static vct Random(int n, int a, int b);
-    static vct Copy(const vct &v);
+    static vct zeros(size_t n);
+    static vct ones(size_t n);
+    static vct full(size_t n, double x);
+    static vct random(size_t n, double a, double b);
+    static vct copy(const vct &v);
+    static vct Delete(const vct &v);
 
-    static double Len(const vct &v);
-    static double Dist(const vct &v1, const vct &v2);
+    static double mag(const vct &v);
+    static double dist(const vct &v1, const vct &v2);
+
+    static vct reciprocal(const vct &v);
 
     vct &operator=(const vct &v);
-    double &operator[](int idx) const;
+    double &operator[](size_t idx) const;
 
     vct &operator+=(const double &x);
     vct &operator-=(const double &x);
     vct &operator*=(const double &x);
     vct &operator/=(const double &x);
 
-    vct &operator+=(const vct &v2);
-    vct &operator-=(const vct &v2);
-    vct &operator*=(const vct &v2);
-    vct &operator/=(const vct &v2);
+    vct &operator+=(const vct &v);
+    vct &operator-=(const vct &v);
+    vct &operator*=(const vct &v);
+    vct &operator/=(const vct &v);
 
-    friend vct operator+(vct v, const double &x);
-    friend vct operator-(vct v, const double &x);
-    friend vct operator*(vct v, const double &x);
-    friend vct operator/(vct v, const double &x);
+    friend vct operator+(const vct &v, const double &x);
+    friend vct operator-(const vct &v, const double &x);
+    friend vct operator*(const vct &v, const double &x);
+    friend vct operator/(const vct &v, const double &x);
 
-    friend vct operator+(vct v1, const vct &v2);
-    friend vct operator-(vct v1, const vct &v2);
-    friend vct operator*(vct v1, const vct &v2);
-    friend vct operator/(vct v1, const vct &v2);
+    friend vct operator+(const double &x, const vct &v);
+    friend vct operator-(const double &x, const vct &v);
+    friend vct operator*(const double &x, const vct &v);
+    friend vct operator/(const double &x, const vct &v);
+
+    friend vct operator+(const vct &v1, const vct &v2);
+    friend vct operator-(const vct &v1, const vct &v2);
+    friend vct operator*(const vct &v1, const vct &v2);
+    friend vct operator/(const vct &v1, const vct &v2);
 };
 
-vct operator+(vct v, const double &x);
-vct operator-(vct v, const double &x);
-vct operator*(vct v, const double &x);
-vct operator/(vct v, const double &x);
+vct operator+(const vct &v, const double &x);
+vct operator-(const vct &v, const double &x);
+vct operator*(const vct &v, const double &x);
+vct operator/(const vct &v, const double &x);
 
-vct operator+(vct v1, const vct &v2);
-vct operator-(vct v1, const vct &v2);
-vct operator*(vct v1, const vct &v2);
-vct operator/(vct v1, const vct &v2);
+vct operator+(const double &x, const vct &v);
+vct operator-(const double &x, const vct &v);
+vct operator*(const double &x, const vct &v);
+vct operator/(const double &x, const vct &v);
+
+vct operator+(const vct &v1, const vct &v2);
+vct operator-(const vct &v1, const vct &v2);
+vct operator*(const vct &v1, const vct &v2);
+vct operator/(const vct &v1, const vct &v2);
 
 #endif
