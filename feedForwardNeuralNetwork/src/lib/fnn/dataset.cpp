@@ -82,13 +82,18 @@ void dataset::divide(vct *x, vct *y, vct *trX, vct *trY, vct *tsX, vct *tsY, dou
 
 void dataset::shuffle(vct *outX, vct *outY, size_t size)
 {
-    std::srand(time(NULL));
+    std::srand(static_cast<unsigned>(time(0)));
     for (size_t i = 0; i < 2 * size; i++)
     {
-        size_t j = rand() % size;
-        size_t k = rand() % size;
+        size_t j = (unsigned int)rand() % size;
+        size_t k = (unsigned int)rand() % size;
 
-        std::swap(outX[j], outX[k]);
-        std::swap(outY[j], outY[k]);
+        vct tmp = outX[j];
+        outX[j] = outX[k];
+        outX[k] = tmp;
+
+        tmp = outY[j];
+        outY[j] = outY[k];
+        outY[k] = tmp;
     }
 }
