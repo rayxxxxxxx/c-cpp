@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <math.h>
 
-#include "linalg/linalg.hpp"
+#include "linalg.hpp"
 
 double linalg::min(double *v, size_t n)
 {
@@ -130,6 +130,66 @@ double *linalg::exp(double *v, size_t n)
     return newvct;
 }
 
+double *linalg::sin(double *v, size_t n)
+{
+    double *newvct = new double[n];
+    for (size_t i = 0; i < n; i++)
+    {
+        newvct[i] = std::sin(v[i]);
+    }
+    return newvct;
+}
+
+double *linalg::cos(double *v, size_t n)
+{
+    double *newvct = new double[n];
+    for (size_t i = 0; i < n; i++)
+    {
+        newvct[i] = std::cos(v[i]);
+    }
+    return newvct;
+}
+
+double *linalg::tan(double *v, size_t n)
+{
+    double *newvct = new double[n];
+    for (size_t i = 0; i < n; i++)
+    {
+        newvct[i] = std::tan(v[i]);
+    }
+    return newvct;
+}
+
+double *linalg::sinh(double *v, size_t n)
+{
+    double *newvct = new double[n];
+    for (size_t i = 0; i < n; i++)
+    {
+        newvct[i] = std::sinh(v[i]);
+    }
+    return newvct;
+}
+
+double *linalg::cosh(double *v, size_t n)
+{
+    double *newvct = new double[n];
+    for (size_t i = 0; i < n; i++)
+    {
+        newvct[i] = std::cosh(v[i]);
+    }
+    return newvct;
+}
+
+double *linalg::tanh(double *v, size_t n)
+{
+    double *newvct = new double[n];
+    for (size_t i = 0; i < n; i++)
+    {
+        newvct[i] = std::tanh(v[i]);
+    }
+    return newvct;
+}
+
 double *linalg::map(double (*fnc)(double), double *v, size_t n)
 {
     double *newvct = new double[n];
@@ -245,7 +305,7 @@ double **linalg::clip(double **m, double a, double b, size_t r, size_t c)
     return newmtrx;
 }
 
-double **lerp(double **m1, double **m2, size_t r, size_t c, double t)
+double **linalg::lerp(double **m1, double **m2, double t, size_t r, size_t c)
 {
     double **newmtrx = new double *[r];
     for (size_t i = 0; i < r; i++)
@@ -330,6 +390,108 @@ double **linalg::exp(double **m, size_t r, size_t c)
     return newmtrx;
 }
 
+double **linalg::sin(double **m, size_t r, size_t c)
+{
+    double **newmtrx = new double *[r];
+    for (size_t i = 0; i < r; i++)
+    {
+        newmtrx[i] = new double[c];
+    }
+    for (size_t i = 0; i < r; i++)
+    {
+        for (size_t j = 0; j < c; j++)
+        {
+            newmtrx[i][j] = std::sin(m[i][j]);
+        }
+    }
+    return newmtrx;
+}
+
+double **linalg::cos(double **m, size_t r, size_t c)
+{
+    double **newmtrx = new double *[r];
+    for (size_t i = 0; i < r; i++)
+    {
+        newmtrx[i] = new double[c];
+    }
+    for (size_t i = 0; i < r; i++)
+    {
+        for (size_t j = 0; j < c; j++)
+        {
+            newmtrx[i][j] = std::cos(m[i][j]);
+        }
+    }
+    return newmtrx;
+}
+
+double **linalg::tan(double **m, size_t r, size_t c)
+{
+    double **newmtrx = new double *[r];
+    for (size_t i = 0; i < r; i++)
+    {
+        newmtrx[i] = new double[c];
+    }
+    for (size_t i = 0; i < r; i++)
+    {
+        for (size_t j = 0; j < c; j++)
+        {
+            newmtrx[i][j] = std::tan(m[i][j]);
+        }
+    }
+    return newmtrx;
+}
+
+double **linalg::sinh(double **m, size_t r, size_t c)
+{
+    double **newmtrx = new double *[r];
+    for (size_t i = 0; i < r; i++)
+    {
+        newmtrx[i] = new double[c];
+    }
+    for (size_t i = 0; i < r; i++)
+    {
+        for (size_t j = 0; j < c; j++)
+        {
+            newmtrx[i][j] = std::sinh(m[i][j]);
+        }
+    }
+    return newmtrx;
+}
+
+double **linalg::cosh(double **m, size_t r, size_t c)
+{
+    double **newmtrx = new double *[r];
+    for (size_t i = 0; i < r; i++)
+    {
+        newmtrx[i] = new double[c];
+    }
+    for (size_t i = 0; i < r; i++)
+    {
+        for (size_t j = 0; j < c; j++)
+        {
+            newmtrx[i][j] = std::cosh(m[i][j]);
+        }
+    }
+    return newmtrx;
+}
+
+double **linalg::tanh(double **m, size_t r, size_t c)
+{
+    double **newmtrx = new double *[r];
+    for (size_t i = 0; i < r; i++)
+    {
+        newmtrx[i] = new double[c];
+    }
+    for (size_t i = 0; i < r; i++)
+    {
+        for (size_t j = 0; j < c; j++)
+        {
+            newmtrx[i][j] = std::tanh(m[i][j]);
+        }
+    }
+    return newmtrx;
+}
+
 double **linalg::map(double (*fnc)(double), double **m, size_t r, size_t c)
 {
     double **newmtrx = new double *[r];
@@ -347,6 +509,30 @@ double **linalg::map(double (*fnc)(double), double **m, size_t r, size_t c)
     return newmtrx;
 }
 
+double **linalg::mapRow(double (*fnc)(double), double **m, size_t r, size_t c)
+{
+    double **newmtrx = new double *[r];
+    for (size_t i = 0; i < r; i++)
+    {
+        newmtrx[i] = linalg::map(fnc, m[i], c);
+    }
+    return newmtrx;
+}
+
+double **linalg::mapCol(double (*fnc)(double), double **m, size_t r, size_t c)
+{
+    double **newmtrx = new double *[c];
+    for (size_t i = 0; i < c; i++)
+    {
+        double *col = matrix::col(m, i, r, c);
+        newmtrx[i] = linalg::map(fnc, col, r);
+        delete[] col;
+    }
+    double **newmtrxT = matrix::transpose(newmtrx, c, r);
+    matrix::Delete(newmtrx, c);
+    return newmtrxT;
+}
+
 double linalg::dot(double *v1, double *v2, size_t n)
 {
     double res = 0.0;
@@ -359,7 +545,7 @@ double linalg::dot(double *v1, double *v2, size_t n)
 
 double *linalg::dot(double **m, double *v, size_t r, size_t c)
 {
-    double *newvct = new double[r];
+    double *newvct = vector::zeros(r);
     for (size_t i = 0; i < r; i++)
     {
         for (size_t j = 0; j < c; j++)
@@ -370,13 +556,22 @@ double *linalg::dot(double **m, double *v, size_t r, size_t c)
     return newvct;
 }
 
+double *linalg::dot(double *v, double **m, size_t r, size_t c)
+{
+    double *newvct = vector::zeros(c);
+    for (size_t i = 0; i < c; i++)
+    {
+        for (size_t j = 0; j < r; j++)
+        {
+            newvct[i] += m[j][i] * v[j];
+        }
+    }
+    return newvct;
+}
+
 double **linalg::mul(double *v1, double *v2, size_t n1, size_t n2)
 {
-    double **newmtrx = new double *[n1];
-    for (size_t i = 0; i < n1; i++)
-    {
-        newmtrx[i] = new double[n2];
-    }
+    double **newmtrx = matrix::zeros(n1, n2);
     for (size_t i = 0; i < n1; i++)
     {
         for (size_t j = 0; j < n2; j++)
@@ -389,11 +584,7 @@ double **linalg::mul(double *v1, double *v2, size_t n1, size_t n2)
 
 double **linalg::mul(double **m1, double **m2, size_t r1, size_t c1, size_t r2, size_t c2)
 {
-    double **newmtrx = new double *[r1];
-    for (size_t i = 0; i < r1; i++)
-    {
-        newmtrx[i] = new double[c2];
-    }
+    double **newmtrx = matrix::zeros(r1, c2);
     for (size_t i = 0; i < r1; i++)
     {
         for (size_t j = 0; j < c2; j++)
@@ -411,29 +602,32 @@ double **linalg::mul(double **m1, double **m2, size_t r1, size_t c1, size_t r2, 
 
 double *linalg::solve(double **A, double *B, size_t r, size_t c)
 {
-    double **copyA = matrix::copy(A, r, c);
-    double *copyB = vector::copy(B, c);
+    double **cpA = matrix::copy(A, r, c);
+    double *cpB = vector::copy(B, r);
     double *X = new double[c];
 
     for (size_t j = c - 1; j > 0; j--)
     {
         for (size_t i = j - 1; i >= 0; i--)
         {
-            copyB[i] = -copyA[i][j] / copyA[j][j] * copyB[j] + copyB[i];
-            copyA[i] = vector::add(vector::scale(copyA[j], -copyA[i][j] / copyA[j][j], c), copyA[i], c);
+            cpB[i] = -cpA[i][j] / cpA[j][j] * cpB[j] + cpB[i];
+            cpA[i] = vector::add(vector::mul(cpA[j], -cpA[i][j] / cpA[j][j], c), cpA[i], c);
         }
     }
 
-    X[0] = copyB[0] / copyA[0][0];
+    X[0] = cpB[0] / cpA[0][0];
     for (size_t i = 1; i < r; i++)
     {
-        double q = copyB[i];
+        double q = cpB[i];
         for (size_t j = 0; j < i; j++)
         {
-            q -= copyA[i][j] * X[j];
+            q -= cpA[i][j] * X[j];
         }
-        X[i] = q / copyA[i][i];
+        X[i] = q / cpA[i][i];
     }
+
+    matrix::Delete(cpA, r);
+    delete[] cpB;
 
     return X;
 }
@@ -529,6 +723,36 @@ vct linalg::exp(const vct &v)
     return vct(linalg::exp(v.ptr(), v.size()), v.size());
 }
 
+vct linalg::sin(const vct &v)
+{
+    return vct(linalg::sin(v.ptr(), v.size()), v.size());
+}
+
+vct linalg::cos(const vct &v)
+{
+    return vct(linalg::cos(v.ptr(), v.size()), v.size());
+}
+
+vct linalg::tan(const vct &v)
+{
+    return vct(linalg::tan(v.ptr(), v.size()), v.size());
+}
+
+vct linalg::sinh(const vct &v)
+{
+    return vct(linalg::sinh(v.ptr(), v.size()), v.size());
+}
+
+vct linalg::cosh(const vct &v)
+{
+    return vct(linalg::cosh(v.ptr(), v.size()), v.size());
+}
+
+vct linalg::tanh(const vct &v)
+{
+    return vct(linalg::tanh(v.ptr(), v.size()), v.size());
+}
+
 vct linalg::map(double (*fnc)(double), const vct &v)
 {
     return vct(linalg::map(fnc, v.ptr(), v.size()), v.size());
@@ -615,7 +839,10 @@ mtrx linalg::clip(const mtrx &m, double a, double b)
     return mtrx(linalg::clip(m.ptr(), a, b, m.nrow(), m.ncol()), m.nrow(), m.ncol());
 }
 
-mtrx lerp(const mtrx &m1, const mtrx &m2, double t) {}
+mtrx linalg::lerp(const mtrx &m1, const mtrx &m2, double t)
+{
+    return mtrx(linalg::lerp(m1.ptr(), m2.ptr(), t, m1.nrow(), m1.ncol()), m1.nrow(), m1.ncol());
+}
 
 mtrx linalg::square(const mtrx &m)
 {
@@ -637,9 +864,49 @@ mtrx linalg::exp(const mtrx &m)
     return mtrx(linalg::exp(m.ptr(), m.nrow(), m.ncol()), m.nrow(), m.ncol());
 }
 
+mtrx linalg::sin(const mtrx &m)
+{
+    return mtrx(linalg::sin(m.ptr(), m.nrow(), m.ncol()), m.nrow(), m.ncol());
+}
+
+mtrx linalg::cos(const mtrx &m)
+{
+    return mtrx(linalg::cos(m.ptr(), m.nrow(), m.ncol()), m.nrow(), m.ncol());
+}
+
+mtrx linalg::tan(const mtrx &m)
+{
+    return mtrx(linalg::tan(m.ptr(), m.nrow(), m.ncol()), m.nrow(), m.ncol());
+}
+
+mtrx linalg::sinh(const mtrx &m)
+{
+    return mtrx(linalg::sinh(m.ptr(), m.nrow(), m.ncol()), m.nrow(), m.ncol());
+}
+
+mtrx linalg::cosh(const mtrx &m)
+{
+    return mtrx(linalg::cosh(m.ptr(), m.nrow(), m.ncol()), m.nrow(), m.ncol());
+}
+
+mtrx linalg::tanh(const mtrx &m)
+{
+    return mtrx(linalg::tanh(m.ptr(), m.nrow(), m.ncol()), m.nrow(), m.ncol());
+}
+
 mtrx linalg::map(double (*fnc)(double), const mtrx &m)
 {
     return mtrx(linalg::map(fnc, m.ptr(), m.nrow(), m.ncol()), m.nrow(), m.ncol());
+}
+
+mtrx linalg::mapRow(double (*fnc)(double), const mtrx &m)
+{
+    return mtrx(linalg::mapRow(fnc, m.ptr(), m.nrow(), m.ncol()), m.nrow(), m.ncol());
+}
+
+mtrx linalg::mapCol(double (*fnc)(double), const mtrx &m)
+{
+    return mtrx(linalg::mapCol(fnc, m.ptr(), m.nrow(), m.ncol()), m.nrow(), m.ncol());
 }
 
 double linalg::dot(const vct &v1, const vct &v2)
@@ -650,6 +917,11 @@ double linalg::dot(const vct &v1, const vct &v2)
 vct linalg::dot(const mtrx &m, const vct &v)
 {
     return vct(linalg::dot(m.ptr(), v.ptr(), m.nrow(), m.ncol()), m.nrow());
+}
+
+vct linalg::dot(const vct &v, const mtrx &m)
+{
+    return vct(linalg::dot(v.ptr(), m.ptr(), m.nrow(), m.ncol()), m.ncol());
 }
 
 mtrx linalg::mul(const vct &v1, const vct &v2)

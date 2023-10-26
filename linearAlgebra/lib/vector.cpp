@@ -2,7 +2,7 @@
 #include <time.h>
 #include <math.h>
 
-#include "linalg/vector.hpp"
+#include "vector.hpp"
 
 double *vector::zeros(size_t n)
 {
@@ -55,7 +55,7 @@ double *vector::copy(double *v, size_t n)
     return newvct;
 }
 
-double *vector::Delete(double *v)
+void vector::Delete(double *v)
 {
     delete[] v;
 }
@@ -110,7 +110,7 @@ double *vector::sub(double *v, double x, size_t n)
     return newvct;
 }
 
-double *vector::scale(double *v, double x, size_t n)
+double *vector::mul(double *v, double x, size_t n)
 {
     double *newvct = new double[n];
     for (size_t i = 0; i < n; i++)
@@ -140,7 +140,7 @@ double *vector::sub(double *v1, double *v2, size_t n)
     return newvct;
 }
 
-double *vector::scale(double *v1, double *v2, size_t n)
+double *vector::mul(double *v1, double *v2, size_t n)
 {
     double *newvct = new double[n];
     for (size_t i = 0; i < n; i++)
@@ -180,7 +180,10 @@ vct::vct(const vct &v)
 
 vct::~vct()
 {
-    delete[] this->p;
+    if (this->p != nullptr)
+    {
+        delete[] this->p;
+    }
 }
 
 size_t vct::size() const
@@ -191,6 +194,11 @@ size_t vct::size() const
 double *vct::ptr() const
 {
     return this->p;
+}
+
+vct vct::copy() const
+{
+    return vct(vector::copy(p, n), n);
 }
 
 vct vct::zeros(size_t n)
@@ -218,9 +226,14 @@ vct vct::copy(const vct &v)
     return vct(vector::copy(v.p, v.n), v.n);
 }
 
-vct vct::Delete(const vct &v)
+double vct::mag() const
 {
-    delete[] v.p;
+    return vector::mag(this->p, this->n);
+}
+
+vct vct::reciprocal() const
+{
+    return vct(vector::reciprocal(this->p, this->n), this->n);
 }
 
 double vct::mag(const vct &v)
@@ -228,14 +241,14 @@ double vct::mag(const vct &v)
     return vector::mag(v.p, v.n);
 }
 
+vct vct::reciprocal(const vct &v)
+{
+    return vct(vector::reciprocal(v.p, v.n), v.n);
+}
+
 double vct::dist(const vct &v1, const vct &v2)
 {
     return vector::dist(v1.p, v2.p, v1.n);
-}
-
-vct vct::reciprocal(const vct &v)
-{
-    return vct(vector::reciprocal(v.ptr(), v.size()), v.size());
 }
 
 vct &vct::operator=(const vct &v)
@@ -248,7 +261,7 @@ vct &vct::operator=(const vct &v)
 
 double &vct::operator[](size_t index) const
 {
-    return this->p[index >= 0 ? index : this->n + index];
+    return this->p[index];
 }
 
 vct &vct::operator+=(const double &x)
@@ -335,12 +348,12 @@ vct operator-(const vct &v, const double &x)
 
 vct operator*(const vct &v, const double &x)
 {
-    return vct(vector::scale(v.ptr(), x, v.size()), v.size());
+    return vct(vector::mul(v.ptr(), x, v.size()), v.size());
 }
 
 vct operator/(const vct &v, const double &x)
 {
-    return vct(vector::scale(v.ptr(), 1 / x, v.size()), v.size());
+    return vct(vector::mul(v.ptr(), 1 / x, v.size()), v.size());
 }
 
 vct operator+(const double &x, const vct &v)
@@ -355,12 +368,12 @@ vct operator-(const double &x, const vct &v)
 
 vct operator*(const double &x, const vct &v)
 {
-    return vct(vector::scale(v.ptr(), x, v.size()), v.size());
+    return vct(vector::mul(v.ptr(), x, v.size()), v.size());
 }
 
 vct operator/(const double &x, const vct &v)
 {
-    return vct(vector::scale(v.ptr(), 1 / x, v.size()), v.size());
+    return vct(vector::mul(v.ptr(), 1 / x, v.size()), v.size());
 }
 
 vct operator+(const vct &v1, const vct &v2)
@@ -375,13 +388,13 @@ vct operator-(const vct &v1, const vct &v2)
 
 vct operator*(const vct &v1, const vct &v2)
 {
-    return vct(vector::scale(v1.ptr(), v2.ptr(), v1.size()), v1.size());
+    return vct(vector::mul(v1.ptr(), v2.ptr(), v1.size()), v1.size());
 }
 
 vct operator/(const vct &v1, const vct &v2)
 {
     double *rv2 = vector::reciprocal(v2.ptr(), v2.size());
-    vct v = vct(vector::scale(v1.ptr(), rv2, v1.size()), v1.size());
+    vct v = vct(vector::mul(v1.ptr(), rv2, v1.size()), v1.size());
     delete[] rv2;
     return v;
 }

@@ -8,7 +8,7 @@ namespace vector
     double *full(size_t n, double x);
     double *random(size_t n, double a, double b);
     double *copy(double *v, size_t n);
-    double *Delete(double *v);
+    void Delete(double *v);
 
     double mag(double *v, size_t n);
     double dist(double *v1, double *v2, size_t n);
@@ -17,11 +17,11 @@ namespace vector
 
     double *add(double *v, double x, size_t n);
     double *sub(double *v, double x, size_t n);
-    double *scale(double *v, double x, size_t n);
+    double *mul(double *v, double x, size_t n);
 
     double *add(double *v1, double *v2, size_t n);
     double *sub(double *v1, double *v2, size_t n);
-    double *scale(double *v1, double *v2, size_t n);
+    double *mul(double *v1, double *v2, size_t n);
     double *div(double *v1, double *v2, size_t n);
 }
 
@@ -40,20 +40,23 @@ public:
     size_t size() const;
     double *ptr() const;
 
+    vct copy() const;
+
+    double mag() const;
+    vct reciprocal() const;
+
     static vct zeros(size_t n);
     static vct ones(size_t n);
     static vct full(size_t n, double x);
     static vct random(size_t n, double a, double b);
     static vct copy(const vct &v);
-    static vct Delete(const vct &v);
 
     static double mag(const vct &v);
     static double dist(const vct &v1, const vct &v2);
-
     static vct reciprocal(const vct &v);
 
-    vct &operator=(const vct &v);
     double &operator[](size_t idx) const;
+    vct &operator=(const vct &v);
 
     vct &operator+=(const double &x);
     vct &operator-=(const double &x);

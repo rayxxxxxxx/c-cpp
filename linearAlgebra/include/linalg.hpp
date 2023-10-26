@@ -20,6 +20,12 @@ namespace linalg
     double *pow(double *v, double x, size_t n);
     double *sqrt(double *v, size_t n);
     double *exp(double *v, size_t n);
+    double *sin(double *v, size_t n);
+    double *cos(double *v, size_t n);
+    double *tan(double *v, size_t n);
+    double *sinh(double *v, size_t n);
+    double *cosh(double *v, size_t n);
+    double *tanh(double *v, size_t n);
     double *map(double (*fnc)(double), double *v, size_t n);
 
     double min(double **m, size_t r, size_t c);
@@ -30,16 +36,25 @@ namespace linalg
 
     double **abs(double **m, size_t r, size_t c);
     double **clip(double **m, double a, double b, size_t r, size_t c);
-    double **lerp(double **m1, double **m2, size_t r, size_t c, double t);
+    double **lerp(double **m1, double **m2, double t, size_t r, size_t c);
 
     double **square(double **m, size_t r, size_t c);
     double **pow(double **m, double x, size_t r, size_t c);
     double **sqrt(double **m, size_t r, size_t c);
     double **exp(double **m, size_t r, size_t c);
+    double **sin(double **m, size_t r, size_t c);
+    double **cos(double **m, size_t r, size_t c);
+    double **tan(double **m, size_t r, size_t c);
+    double **sinh(double **m, size_t r, size_t c);
+    double **cosh(double **m, size_t r, size_t c);
+    double **tanh(double **m, size_t r, size_t c);
     double **map(double (*fnc)(double), double **m, size_t r, size_t c);
+    double **mapRow(double (*fnc)(double), double **m, size_t r, size_t c);
+    double **mapCol(double (*fnc)(double), double **m, size_t r, size_t c);
 
     double dot(double *v1, double *v2, size_t n);
     double *dot(double **m, double *v, size_t r, size_t c);
+    double *dot(double *v, double **m, size_t r, size_t c);
     double **mul(double *v1, double *v2, size_t n1, size_t n2);
     double **mul(double **m1, double **m2, size_t r1, size_t c1, size_t r2, size_t c2);
     double *solve(double **A, double *B, size_t r, size_t c);
@@ -58,6 +73,12 @@ namespace linalg
     vct pow(const vct &v, double x);
     vct sqrt(const vct &v);
     vct exp(const vct &v);
+    vct sin(const vct &v);
+    vct cos(const vct &v);
+    vct tan(const vct &v);
+    vct sinh(const vct &v);
+    vct cosh(const vct &v);
+    vct tanh(const vct &v);
     vct map(double (*fnc)(double), const vct &v);
 
     double min(const mtrx &m);
@@ -74,12 +95,21 @@ namespace linalg
     mtrx pow(const mtrx &m, double x);
     mtrx sqrt(const mtrx &m);
     mtrx exp(const mtrx &m);
+    mtrx sin(const mtrx &m);
+    mtrx cos(const mtrx &m);
+    mtrx tan(const mtrx &m);
+    mtrx sinh(const mtrx &m);
+    mtrx cosh(const mtrx &m);
+    mtrx tanh(const mtrx &m);
     mtrx map(double (*fnc)(double), const mtrx &m);
+    mtrx mapRow(double (*fnc)(double), const mtrx &m);
+    mtrx mapCol(double (*fnc)(double), const mtrx &m);
 
     double dot(const vct &v1, const vct &v2);
     vct dot(const mtrx &m, const vct &v);
-    mtrx mul(const vct &v1, const vct &v2);
+    vct dot(const vct &v, const mtrx &m);
     mtrx mul(const mtrx &m1, const mtrx &m2);
+    mtrx mul(const vct &v1, const vct &v2);
     vct solve(const mtrx &A, const vct &B);
 }
 

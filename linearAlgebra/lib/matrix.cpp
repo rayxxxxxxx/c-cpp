@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <math.h>
 
-#include "linalg/matrix.hpp"
+#include "matrix.hpp"
 
 double *matrix::row(double **m, size_t k, size_t r, size_t c)
 {
@@ -44,11 +44,7 @@ double **matrix::zeros(size_t r, size_t c)
 
 double **matrix::ones(size_t r, size_t c)
 {
-    double **newmtrx = new double *[r];
-    for (size_t i = 0; i < r; i++)
-    {
-        newmtrx[i] = new double[c];
-    }
+    double **newmtrx = matrix::zeros(r, c);
     for (size_t i = 0; i < r; i++)
     {
         for (size_t j = 0; j < c; j++)
@@ -61,11 +57,7 @@ double **matrix::ones(size_t r, size_t c)
 
 double **matrix::full(size_t r, size_t c, double x)
 {
-    double **newmtrx = new double *[r];
-    for (size_t i = 0; i < r; i++)
-    {
-        newmtrx[i] = new double[c];
-    }
+    double **newmtrx = matrix::zeros(r, c);
     for (size_t i = 0; i < r; i++)
     {
         for (size_t j = 0; j < c; j++)
@@ -93,11 +85,7 @@ double **matrix::diag(size_t n, double x)
 double **matrix::random(size_t r, size_t c, double a, double b)
 {
     std::srand(static_cast<unsigned>(time(0)));
-    double **newmtrx = new double *[r];
-    for (size_t i = 0; i < r; i++)
-    {
-        newmtrx[i] = new double[c];
-    }
+    double **newmtrx = matrix::zeros(r, c);
     for (size_t i = 0; i < r; i++)
     {
         for (size_t j = 0; j < c; j++)
@@ -110,11 +98,7 @@ double **matrix::random(size_t r, size_t c, double a, double b)
 
 double **matrix::copy(double **m, size_t r, size_t c)
 {
-    double **newmtrx = new double *[r];
-    for (size_t i = 0; i < r; i++)
-    {
-        newmtrx[i] = new double[c];
-    }
+    double **newmtrx = matrix::zeros(r, c);
     for (size_t i = 0; i < r; i++)
     {
         for (size_t j = 0; j < c; j++)
@@ -142,16 +126,13 @@ double matrix::det(double **m, size_t r, size_t c)
     {
         res *= UTriangle[i][i];
     }
+    matrix::Delete(UTriangle, r);
     return res;
 }
 
 double **matrix::reciprocal(double **m, size_t r, size_t c)
 {
-    double **newmtrx = new double *[r];
-    for (size_t i = 0; i < r; i++)
-    {
-        newmtrx[i] = new double[c];
-    }
+    double **newmtrx = matrix::zeros(r, c);
     for (size_t i = 0; i < r; i++)
     {
         for (size_t j = 0; j < c; j++)
@@ -164,11 +145,7 @@ double **matrix::reciprocal(double **m, size_t r, size_t c)
 
 double **matrix::transpose(double **m, size_t r, size_t c)
 {
-    double **newmtrx = new double *[c];
-    for (size_t i = 0; i < c; i++)
-    {
-        newmtrx[i] = new double[r];
-    }
+    double **newmtrx = matrix::zeros(c, r);
     for (size_t i = 0; i < r; i++)
     {
         for (size_t j = 0; j < c; j++)
@@ -188,7 +165,7 @@ double **matrix::LTriangle(double **m, size_t r, size_t c)
     {
         for (size_t i = j - 1; i >= 0; i--)
         {
-            L[i] = vector::add(vector::scale(L[j], -L[i][j] / L[j][j], c), L[i], c);
+            L[i] = vector::add(vector::mul(L[j], -L[i][j] / L[j][j], c), L[i], c);
         }
     }
     return L;
@@ -201,7 +178,7 @@ double **matrix::UTriangle(double **m, size_t r, size_t c)
     {
         for (size_t i = j + 1; i < r; i++)
         {
-            U[i] = vector::add(vector::scale(U[j], -U[i][j] / U[j][j], c), U[i], c);
+            U[i] = vector::add(vector::mul(U[j], -U[i][j] / U[j][j], c), U[i], c);
         }
     }
     return U;
@@ -216,7 +193,7 @@ double ***matrix::LU(double **m, size_t r, size_t c)
         for (size_t i = j + 1; i < r; i++)
         {
             L[i][j] = U[i][j] / U[j][j];
-            U[i] = vector::add(vector::scale(U[j], -U[i][j] / U[j][j], c), U[i], c);
+            U[i] = vector::add(vector::mul(U[j], -U[i][j] / U[j][j], c), U[i], c);
         }
     }
     return new (double **[]){L, U};
@@ -224,11 +201,7 @@ double ***matrix::LU(double **m, size_t r, size_t c)
 
 double **matrix::add(double **m, double x, size_t r, size_t c)
 {
-    double **newmtrx = new double *[r];
-    for (size_t i = 0; i < r; i++)
-    {
-        newmtrx[i] = new double[c];
-    }
+    double **newmtrx = matrix::zeros(r, c);
     for (size_t i = 0; i < r; i++)
     {
         for (size_t j = 0; j < c; j++)
@@ -241,11 +214,7 @@ double **matrix::add(double **m, double x, size_t r, size_t c)
 
 double **matrix::sub(double **m, double x, size_t r, size_t c)
 {
-    double **newmtrx = new double *[r];
-    for (size_t i = 0; i < r; i++)
-    {
-        newmtrx[i] = new double[c];
-    }
+    double **newmtrx = matrix::zeros(r, c);
     for (size_t i = 0; i < r; i++)
     {
         for (size_t j = 0; j < c; j++)
@@ -256,13 +225,9 @@ double **matrix::sub(double **m, double x, size_t r, size_t c)
     return newmtrx;
 }
 
-double **matrix::scale(double **m, double x, size_t r, size_t c)
+double **matrix::mul(double **m, double x, size_t r, size_t c)
 {
-    double **newmtrx = new double *[r];
-    for (size_t i = 0; i < r; i++)
-    {
-        newmtrx[i] = new double[c];
-    }
+    double **newmtrx = matrix::zeros(r, c);
     for (size_t i = 0; i < r; i++)
     {
         for (size_t j = 0; j < c; j++)
@@ -275,11 +240,7 @@ double **matrix::scale(double **m, double x, size_t r, size_t c)
 
 double **matrix::add(double **m1, double **m2, size_t r, size_t c)
 {
-    double **newmtrx = new double *[r];
-    for (size_t i = 0; i < r; i++)
-    {
-        newmtrx[i] = new double[c];
-    }
+    double **newmtrx = matrix::zeros(r, c);
     for (size_t i = 0; i < r; i++)
     {
         for (size_t j = 0; j < c; j++)
@@ -292,11 +253,7 @@ double **matrix::add(double **m1, double **m2, size_t r, size_t c)
 
 double **matrix::sub(double **m1, double **m2, size_t r, size_t c)
 {
-    double **newmtrx = new double *[r];
-    for (size_t i = 0; i < r; i++)
-    {
-        newmtrx[i] = new double[c];
-    }
+    double **newmtrx = matrix::zeros(r, c);
     for (size_t i = 0; i < r; i++)
     {
         for (size_t j = 0; j < c; j++)
@@ -307,13 +264,9 @@ double **matrix::sub(double **m1, double **m2, size_t r, size_t c)
     return newmtrx;
 }
 
-double **matrix::scale(double **m1, double **m2, size_t r, size_t c)
+double **matrix::mul(double **m1, double **m2, size_t r, size_t c)
 {
-    double **newmtrx = new double *[r];
-    for (size_t i = 0; i < r; i++)
-    {
-        newmtrx[i] = new double[c];
-    }
+    double **newmtrx = matrix::zeros(r, c);
     for (size_t i = 0; i < r; i++)
     {
         for (size_t j = 0; j < c; j++)
@@ -380,6 +333,38 @@ double **mtrx::ptr() const
     return this->m;
 }
 
+vct mtrx::row(size_t k) const
+{
+    return vct(matrix::row(this->m, k, this->r, this->c), this->c);
+}
+
+vct mtrx::col(size_t k) const
+{
+    return vct(matrix::col(this->m, k, this->r, this->c), this->r);
+}
+
+double mtrx::det() const
+{
+    return matrix::det(this->m, this->r, this->c);
+}
+
+mtrx mtrx::reciprocal() const
+{
+    return mtrx(matrix::reciprocal(this->m, this->r, this->c), this->r, this->c);
+}
+
+mtrx mtrx::transpose() const
+{
+    return mtrx(matrix::transpose(this->m, this->r, this->c), this->c, this->r);
+}
+
+mtrx mtrx::inverse() const {}
+
+mtrx mtrx::copy() const
+{
+    return mtrx(matrix::copy(this->m, this->r, this->c), this->r, this->c);
+}
+
 vct mtrx::row(const mtrx &m, size_t k)
 {
     return vct(matrix::row(m.ptr(), k, m.nrow(), m.ncol()), m.ncol());
@@ -420,11 +405,6 @@ mtrx mtrx::copy(const mtrx &m)
     return mtrx(matrix::copy(m.ptr(), m.nrow(), m.ncol()), m.nrow(), m.ncol());
 }
 
-void mtrx::Delete(mtrx &m)
-{
-    matrix::Delete(m.ptr(), m.r);
-}
-
 double mtrx::det(const mtrx &m)
 {
     return matrix::det(m.ptr(), m.nrow(), m.ncol());
@@ -432,7 +412,7 @@ double mtrx::det(const mtrx &m)
 
 mtrx mtrx::reciprocal(const mtrx &m)
 {
-    return mtrx(matrix::reciprocal(m.ptr(), m.nrow(), m.ncol()), m.ncol(), m.nrow());
+    return mtrx(matrix::reciprocal(m.ptr(), m.nrow(), m.ncol()), m.nrow(), m.ncol());
 }
 
 mtrx mtrx::transpose(const mtrx &m)
@@ -584,12 +564,12 @@ mtrx operator-(const mtrx &m, const double &x)
 
 mtrx operator*(const mtrx &m, const double &x)
 {
-    return mtrx(matrix::scale(m.ptr(), x, m.nrow(), m.ncol()), m.nrow(), m.ncol());
+    return mtrx(matrix::mul(m.ptr(), x, m.nrow(), m.ncol()), m.nrow(), m.ncol());
 }
 
 mtrx operator/(const mtrx &m, const double &x)
 {
-    return mtrx(matrix::scale(m.ptr(), 1 / x, m.nrow(), m.ncol()), m.nrow(), m.ncol());
+    return mtrx(matrix::mul(m.ptr(), 1 / x, m.nrow(), m.ncol()), m.nrow(), m.ncol());
 }
 
 mtrx operator+(const double &x, const mtrx &m)
@@ -604,12 +584,12 @@ mtrx operator-(const double &x, const mtrx &m)
 
 mtrx operator*(const double &x, const mtrx &m)
 {
-    return mtrx(matrix::scale(m.ptr(), x, m.nrow(), m.ncol()), m.nrow(), m.ncol());
+    return mtrx(matrix::mul(m.ptr(), x, m.nrow(), m.ncol()), m.nrow(), m.ncol());
 }
 
 mtrx operator/(const double &x, const mtrx &m)
 {
-    return mtrx(matrix::scale(m.ptr(), 1 / x, m.nrow(), m.ncol()), m.nrow(), m.ncol());
+    return mtrx(matrix::mul(m.ptr(), 1 / x, m.nrow(), m.ncol()), m.nrow(), m.ncol());
 }
 
 mtrx operator+(const mtrx &m1, const mtrx &m2)
@@ -624,13 +604,13 @@ mtrx operator-(const mtrx &m1, const mtrx &m2)
 
 mtrx operator*(const mtrx &m1, const mtrx &m2)
 {
-    return mtrx(matrix::scale(m1.ptr(), m2.ptr(), m1.nrow(), m1.ncol()), m1.nrow(), m1.ncol());
+    return mtrx(matrix::mul(m1.ptr(), m2.ptr(), m1.nrow(), m1.ncol()), m1.nrow(), m1.ncol());
 }
 
 mtrx operator/(const mtrx &m1, const mtrx &m2)
 {
     double **rm2 = matrix::reciprocal(m2.ptr(), m2.nrow(), m2.ncol());
-    mtrx m = mtrx(matrix::scale(m1.ptr(), rm2, m1.nrow(), m1.ncol()), m1.nrow(), m1.ncol());
+    mtrx m = mtrx(matrix::mul(m1.ptr(), rm2, m1.nrow(), m1.ncol()), m1.nrow(), m1.ncol());
     matrix::Delete(rm2, m2.nrow());
     return m;
 }
