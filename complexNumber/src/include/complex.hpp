@@ -55,6 +55,11 @@ Complex operator-(const Complex &a, double x);
 Complex operator*(const Complex &a, double x);
 Complex operator/(const Complex &a, double x);
 
+Complex operator+(double x, const Complex &a);
+Complex operator-(double x, const Complex &a);
+Complex operator*(double x, const Complex &a);
+Complex operator/(double x, const Complex &a);
+
 Complex operator+(const Complex &a, const Complex &b);
 Complex operator-(const Complex &a, const Complex &b);
 Complex operator*(const Complex &a, const Complex &b);

@@ -242,17 +242,19 @@ Complex Complex::imaginary(double imaginary)
 
 Complex operator+(const Complex &a, double x)
 {
-    return Complex(a.getRe() + x, a.getIm() + x);
+    return Complex(a.getRe() + x, a.getIm());
 }
 
 Complex operator-(const Complex &a, double x)
 {
-    return Complex(a.getRe() + x, a.getIm() + x);
+    return Complex(a.getRe() - x, a.getIm());
 }
 
 Complex operator*(const Complex &a, double x)
 {
-    return Complex(a.getRe() + x, a.getIm() + x);
+    double re = a.getRe() * x;
+    double im = x * a.getIm();
+    return Complex(re, im);
 }
 
 Complex operator/(const Complex &a, double x)
@@ -261,5 +263,36 @@ Complex operator/(const Complex &a, double x)
     {
         throw std::invalid_argument("division by zero");
     }
-    return Complex(a.getRe() + x, a.getIm() + x);
+    double re = a.getRe() / x;
+    double im = a.getIm() / x;
+    return Complex(re, im);
+}
+
+Complex operator+(double x, const Complex &a)
+{
+    return Complex(a.getRe() + x, a.getIm());
+}
+
+Complex operator-(double x, const Complex &a)
+{
+    return Complex(a.getRe() - x, a.getIm());
+}
+
+Complex operator*(double x, const Complex &a)
+{
+    double re = a.getRe() * x;
+    double im = a.getIm() * x;
+    return Complex(re, im);
+}
+
+Complex operator/(double x, const Complex &a)
+{
+    if (a.getRe() == 0.0 && a.getIm() == 0.0)
+    {
+        throw std::invalid_argument("division by zero");
+    }
+    double denominator = a.getRe() * a.getRe() + a.getIm() * a.getIm();
+    double re = a.getRe() * x;
+    double im = -a.getIm() * x;
+    return Complex(re / denominator, im / denominator);
 }

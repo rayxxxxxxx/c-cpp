@@ -96,6 +96,11 @@ int main(int argc, char **args)
     printComplex(Complex(1, 1) * 1);
     printComplex(Complex(1, 1) / 1);
 
+    printComplex(1 + Complex(1, 1));
+    printComplex(1 - Complex(1, 1));
+    printComplex(1 * Complex(1, 1));
+    printComplex(1 / Complex(1, 1));
+
     try
     {
         printComplex(Complex(1, 1) / 0);
