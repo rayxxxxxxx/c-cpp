@@ -85,14 +85,12 @@ double Complex::operator[](int i) const
 Complex &Complex::operator+=(double x)
 {
     this->re += x;
-    this->im += x;
     return *this;
 }
 
 Complex &Complex::operator-=(double x)
 {
     this->re -= x;
-    this->im -= x;
     return *this;
 }
 
@@ -253,7 +251,7 @@ Complex operator-(const Complex &a, double x)
 Complex operator*(const Complex &a, double x)
 {
     double re = a.getRe() * x;
-    double im = x * a.getIm();
+    double im = a.getIm() * x;
     return Complex(re, im);
 }
 
