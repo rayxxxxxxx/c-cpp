@@ -36,7 +36,7 @@ int main(int argc, char const *argv[])
 
     FNN model = FNN(nIn, nOut);
 
-    model.train(xTrain, yTrain, xTest, yTest, dataSize, testSize, 0.01, 0.01);
+    model.train(xTrain, yTrain, xTest, yTest, dataSize, testSize, 0.005, 0.01);
     std::cout << model.getError(xTest, yTest, testSize) << std::endl;
 
     return 0;

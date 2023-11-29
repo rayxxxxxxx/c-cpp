@@ -69,7 +69,7 @@ Complex &Complex::operator=(const Complex &other)
     return *this;
 }
 
-double Complex::operator[](int i) const
+double Complex::operator[](size_t i) const
 {
     if (i == 0)
     {

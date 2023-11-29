@@ -21,7 +21,7 @@ public:
 
     Complex exp(double n);
 
-    double operator[](int i) const;
+    double operator[](size_t i) const;
 
     Complex &operator=(const Complex &other);
 

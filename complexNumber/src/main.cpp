@@ -110,5 +110,14 @@ int main(int argc, char **args)
         std::cerr << e.what() << '\n';
     }
 
+    try
+    {
+        printComplex(1 / Complex(0, 0));
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+
     return 0;
 }
