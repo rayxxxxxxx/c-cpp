@@ -1,1 +1,0 @@
-# C++ Queue (FIFO list) implementation

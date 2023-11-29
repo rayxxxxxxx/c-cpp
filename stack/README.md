@@ -1,1 +1,0 @@
-# C++ stack (LIFO list) implementation

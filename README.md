@@ -1,2 +1,2 @@
 # cpp_libs
-my own libraries for C++
+my own libraries for C/C++
