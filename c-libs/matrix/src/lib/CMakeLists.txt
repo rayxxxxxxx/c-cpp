@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 
-add_library(matrix SHARED ${CMAKE_SOURCE_DIR}/src/lib/matrix.c)
+set(src ${CMAKE_SOURCE_DIR}/src)
 
-target_include_directories(matrix PUBLIC ${CMAKE_SOURCE_DIR}/src/include)
+add_library(Matrix SHARED ${src}/lib/matrix.c)
+
+target_include_directories(Matrix PUBLIC ${src}/include)

@@ -1,47 +1,46 @@
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 
 #include "stack.h"
 
-void printStack(Stack *stack);
+void printStack(stack *stk);
 
 int main(int argc, char *argv[])
 {
     const size_t SIZE = 4;
 
-    Stack stack1 = make_stack(SIZE);
+    stack stk1 = make_stack(SIZE);
 
-    stack_push(&stack1, 1);
-    stack_push(&stack1, 2);
-    stack_push(&stack1, 3);
-    stack_push(&stack1, 4);
-    stack_push(&stack1, 5);
+    stack_push(&stk1, 1);
+    stack_push(&stk1, 2);
+    stack_push(&stk1, 3);
+    stack_push(&stk1, 4);
+    stack_push(&stk1, 5);
 
-    Stack stack2 = copy_stack(&stack1);
+    stack stk2 = copy_stack(&stk1);
 
-    printf("%d\n", stack_pop(&stack1));
-    printf("%d\n", stack_pop(&stack1));
-    printf("%d\n", stack_pop(&stack1));
-    printf("%d\n", stack_pop(&stack1));
+    printf("%d\n", stack_pop(&stk1));
+    printf("%d\n", stack_pop(&stk1));
+    printf("%d\n", stack_pop(&stk1));
+    printf("%d\n", stack_pop(&stk1));
 
-    printf("size: %ld, capacity: %ld; ", stack1.size, stack1.capacity);
-    printStack(&stack1);
+    printf("size: %ld, capacity: %ld; ", stk1.size, stk1.capacity);
+    printStack(&stk1);
 
-    printf("size: %ld, capacity: %ld; ", stack2.size, stack2.capacity);
-    printStack(&stack2);
+    printf("size: %ld, capacity: %ld; ", stk2.size, stk2.capacity);
+    printStack(&stk2);
 
-    delete_stack(&stack1);
-    delete_stack(&stack2);
+    delete_stack(&stk1);
+    delete_stack(&stk2);
 
     return 0;
 }
 
-void printStack(Stack *stack)
+void printStack(stack *stk)
 {
-    for (size_t i = 0; i < stack->size; i++)
+    for (size_t i = 0; i < stk->size; i++)
     {
-        printf("%d ", stack->p[i]);
+        printf("%d ", stk->p[i]);
     }
     printf("\n");
 }

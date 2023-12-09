@@ -3,20 +3,23 @@
 
 #include <stddef.h>
 
-typedef struct Stack
+typedef struct stack
 {
     size_t capacity;
     size_t size;
     int *p;
-} Stack;
+} stack;
 
-Stack make_stack(size_t capacity);
-Stack copy_stack(Stack *other);
-void delete_stack(Stack *stack);
+stack make_stack(size_t capacity);
 
-int stack_top(Stack *stack);
+stack copy_stack(stack *other);
 
-void stack_push(Stack *stack, int value);
-int stack_pop(Stack *stack);
+void delete_stack(stack* stk);
+
+int stack_top(stack* stk);
+
+void stack_push(stack* stk, int value);
+
+int stack_pop(stack* stk);
 
 #endif

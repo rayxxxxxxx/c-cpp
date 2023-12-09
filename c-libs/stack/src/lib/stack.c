@@ -1,93 +1,91 @@
-#include <error.h>
-#include <errno.h>
 #include <stdlib.h>
+#include <errno.h>
 
 #include "stack.h"
 
-Stack make_stack(size_t capacity)
+stack make_stack(size_t capacity)
 {
-    Stack stack;
+    stack stk;
 
-    stack.capacity = capacity;
-    stack.size = 0;
-    stack.p = (int *)malloc(capacity * sizeof(int));
+    stk.capacity = capacity;
+    stk.size = 0;
+    stk.p = (int *)malloc(capacity * sizeof(int));
 
-    return stack;
+    return stk;
 }
 
-Stack copy_stack(Stack *other)
+stack copy_stack(stack *other)
 {
-    Stack stack;
+    stack stk;
 
-    stack.capacity = other->capacity;
-    stack.size = other->size;
-    stack.p = (int *)malloc(other->capacity * sizeof(int));
+    stk.capacity = other->capacity;
+    stk.size = other->size;
+    stk.p = (int *)malloc(other->capacity * sizeof(int));
 
     for (size_t i = 0; i < other->size; i++)
     {
-        stack.p[i] = other->p[i];
+        stk.p[i] = other->p[i];
     }
 
-    return stack;
+    return stk;
 }
 
-void delete_stack(Stack *stack)
+void delete_stack(stack *stk)
 {
-    free(stack->p);
+    free(stk->p);
 }
 
-int stack_top(Stack *stack)
+int stack_top(stack *stk)
 {
-    return stack->p[stack->size - 1];
+    return stk->p[stk->size - 1];
 }
 
-void stack_push(Stack *stack, int value)
+void stack_push(stack *stk, int value)
 {
-    if (stack->size == stack->capacity)
+    if (stk->size == stk->capacity)
     {
-        int newCapacity = stack->capacity * 2;
+        int newCapacity = stk->capacity * 2;
         int *newptr = (int *)malloc(newCapacity * sizeof(int));
 
-        for (size_t i = 0; i < stack->size; i++)
+        for (size_t i = 0; i < stk->size; i++)
         {
-            newptr[i] = stack->p[i];
+            newptr[i] = stk->p[i];
         }
 
-        free(stack->p);
+        free(stk->p);
 
-        stack->capacity = newCapacity;
-        stack->p = newptr;
+        stk->capacity = newCapacity;
+        stk->p = newptr;
     }
-    stack->p[stack->size] = value;
-    stack->size++;
+    stk->p[stk->size] = value;
+    stk->size++;
 }
 
-int stack_pop(Stack *stack)
+int stack_pop(stack *stk)
 {
-    if (stack->size == 0)
+    if (stk->size == 0)
     {
-        perror("stack is empty");
-        exit(1);
+        exit(EFAULT);
     }
 
-    if (stack->size <= stack->capacity / 4)
+    if (stk->size <= stk->capacity / 4)
     {
-        int newCapacity = stack->capacity / 2;
+        int newCapacity = stk->capacity / 2;
         int *newptr = (int *)malloc(newCapacity * sizeof(int));
 
-        for (size_t i = 0; i < stack->size; i++)
+        for (size_t i = 0; i < stk->size; i++)
         {
-            newptr[i] = stack->p[i];
+            newptr[i] = stk->p[i];
         }
 
-        free(stack->p);
+        free(stk->p);
 
-        stack->capacity = newCapacity;
-        stack->p = newptr;
+        stk->capacity = newCapacity;
+        stk->p = newptr;
     }
 
-    int topVal = stack->p[stack->size - 1];
-    stack->size--;
+    int topVal = stk->p[stk->size - 1];
+    stk->size--;
 
     return topVal;
 }
