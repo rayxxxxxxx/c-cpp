@@ -1,9 +1,9 @@
 #ifndef ARRAY_UTIL_H
 #define ARRAY_UTIL_H
 
-#include <stdbool.h>
-
 #include "array.h"
+
+void array_resize(array *arr, size_t newSize);
 
 array array_from(int *ptr, size_t size);
 
@@ -24,5 +24,7 @@ int array_find(array *arr, int value);
 int array_find_last(array *arr, int value);
 
 size_t array_count(array *arr, int value);
+
+array array_unique(array *arr);
 
 #endif

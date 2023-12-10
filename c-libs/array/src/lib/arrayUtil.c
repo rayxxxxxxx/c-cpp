@@ -2,6 +2,18 @@
 
 #include "arrayUtil.h"
 
+void array_resize(array *arr, size_t newSize)
+{
+    arr->p = realloc(arr->p, newSize * sizeof(int));
+
+    for (size_t i = arr->size; i < newSize; i++)
+    {
+        arr->p[i] = 0;
+    }
+
+    arr->size = newSize;
+}
+
 array array_from(int *ptr, size_t size)
 {
     array arr;
@@ -152,4 +164,23 @@ size_t array_count(array *arr, int value)
     }
 
     return c;
+}
+
+array array_unique(array *arr)
+{
+    array unique = make_array(0);
+
+    for (size_t i = 0; i < arr->size; i++)
+    {
+        if (array_find(&unique, arr->p[i]) == -1)
+        {
+            if (array_count(arr, arr->p[i]) == 1)
+            {
+                array_resize(&unique, unique.size + 1);
+                unique.p[unique.size - 1] = arr->p[i];
+            }
+        }
+    }
+
+    return unique;
 }
