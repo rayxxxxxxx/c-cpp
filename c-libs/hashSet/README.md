@@ -1,6 +1,6 @@
-# C hast set implementation
+# C hash set implementation
 
-(Test example in `hashSet/src/main.c`)
+Test example in [main.c](src/main.c)
 
 ## How to build (cmake version 3.2+)
 
@@ -8,10 +8,11 @@
 > mkdir build  
 > cd build  
 > cmake ..
+> make
 
-You will have shared libraries `libHashSet.so` at `hashSet/build/src/lib`.
+You will have shared libraries `libhset.so` at `hashSet/build/src/lib`.
 
-Header files to include are in `hashSet/src/include`
+Header files to include are in [hashSet.h](src/include/hashSet.h)
 
 ## Run test example
 

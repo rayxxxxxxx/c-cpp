@@ -10,13 +10,14 @@ typedef struct hset
     int *p;
 } hset;
 
-unsigned long gjb2_hash(unsigned char *str);
+size_t gjb2_hash(char *str);
 
 size_t prob(size_t i);
 
 hset make_hset();
 hset copy_hset(hset *other);
 void delete_hset(hset *set);
+void _rehash_hset(hset *set, int newsize);
 
 bool hset_has(hset *set, int value);
 
