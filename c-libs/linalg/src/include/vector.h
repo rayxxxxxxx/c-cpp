@@ -2,48 +2,52 @@
 #define VECTOR_H
 
 #include <stddef.h>
-#include <float.h>
+#include <math.h>
 
 typedef struct vector
 {
     size_t size;
-    float *p;
+    double *p;
 } vector;
 
 vector make_vector(size_t size);
 vector copy_vector(vector *other);
-void delete_vector(vector *v);
+void delete_vector(vector *vct);
 
-vector vfrom(float *ptr, size_t size);
+vector vfrom(double *ptr, size_t size);
 vector vzeros(size_t size);
 vector vones(size_t size);
-vector vfull(size_t size, float value);
+vector vfull(size_t size, double value);
 
-vector vaddn(vector *v, float x);
-vector vsubn(vector *v, float x);
-vector vmuln(vector *v, float x);
-vector vdivn(vector *v, float x);
+vector vaddn(vector *vct, double x);
+vector vsubn(vector *vct, double x);
+vector vmuln(vector *vct, double x);
+vector vdivn(vector *vct, double x);
 
-vector vaddv(vector *v1, vector *v2);
-vector vsubv(vector *v1, vector *v2);
-vector vmulv(vector *v1, vector *v2);
-vector vdivv(vector *v1, vector *v2);
+vector vaddv(vector *lvct, vector *rvct);
+vector vsubv(vector *lvct, vector *rvct);
+vector vmulv(vector *lvct, vector *rvct);
+vector vdivv(vector *lvct, vector *rvct);
 
-float vlen(vector *v);
-float vsum(vector *v);
-float vprod(vector *v);
+double vdot(vector *lvct, vector *rvct);
 
-float vdot(vector *v1, vector *v2);
+double vlen(vector *vct);
+double vlensqr(vector *vct);
 
-vector vnegate(vector *v);
-vector vnorm(vector *v);
-vector vreciprocal(vector *v);
-vector vsquare(vector *v);
-vector vsqrt(vector *v);
-vector vpow(vector *v, float n);
-vector vexp(vector *v);
-vector vsin(vector *v);
-vector vcos(vector *v);
-vector vtan(vector *v);
+double cosim(vector *lvct, vector *rvct);
+
+double vsum(vector *vct);
+double vprod(vector *vct);
+
+vector vnegate(vector *vct);
+vector vnorm(vector *vct);
+vector vreciprocal(vector *vct);
+vector vsquare(vector *vct);
+vector vsqrt(vector *vct);
+vector vpow(vector *vct, double n);
+vector vexp(vector *vct);
+vector vsin(vector *vct); // TODO
+vector vcos(vector *vct); // TODO
+vector vtan(vector *vct); // TODO
 
 #endif

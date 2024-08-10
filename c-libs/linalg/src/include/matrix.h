@@ -2,45 +2,45 @@
 #define MATRIX_H
 
 #include <stddef.h>
-#include <float.h>
+#include <math.h>
 
 typedef struct matrix
 {
-    size_t n;
-    size_t m;
-    float **p;
+    size_t nrow;
+    size_t ncol;
+    double **p;
 } matrix;
 
-matrix make_matrix(size_t n, size_t m);
+matrix make_matrix(size_t nrow, size_t ncol);
 matrix copy_matrix(matrix *other);
 void delete_matrix(matrix *mtrx);
 
-matrix mzeros(size_t n, size_t m);
-matrix mones(size_t n, size_t m);
-matrix mfull(size_t n, size_t m, float value);
-matrix mdiag(size_t n, float value);
+matrix mzeros(size_t nrow, size_t ncol);
+matrix mones(size_t nrow, size_t ncol);
+matrix mfull(size_t nrow, size_t ncol, double value);
+matrix mdiag(size_t nrow, double value);
 
-matrix maddn(matrix *m, float x);
-matrix msubn(matrix *m, float x);
-matrix mmuln(matrix *m, float x);
-matrix mdivn(matrix *m, float x);
+matrix maddn(matrix *mtrx, double x);
+matrix msubn(matrix *mtrx, double x);
+matrix mmuln(matrix *mtrx, double x);
+matrix mdivn(matrix *mtrx, double x);
 
-matrix maddm(matrix *m1, matrix *m2);
-matrix msubm(matrix *m1, matrix *m2);
-matrix mmulm(matrix *m1, matrix *m2);
-matrix mdivm(matrix *m1, matrix *m2);
+matrix maddm(matrix *lmtrx, matrix *rmtrx);
+matrix msubm(matrix *lmtrx, matrix *rmtrx);
+matrix mmulm(matrix *lmtrx, matrix *rmtrx);
+matrix mdivm(matrix *lmtrx, matrix *rmtrx);
 
-float msum(matrix *m);
-float mprod(matrix *m);
+double msum(matrix *mtrx);
+double mprod(matrix *mtrx);
 
-matrix mnegate(matrix *m);
-matrix mreciprocal(matrix *m);
-matrix msquare(matrix *m);
-matrix msqrt(matrix *m);
-matrix mpow(matrix *m, float n);
-matrix mexp(matrix *m);
-matrix msin(matrix *m);
-matrix mcos(matrix *m);
-matrix mtan(matrix *m);
+matrix mnegate(matrix *mtrx);
+matrix mreciprocal(matrix *mtrx);
+matrix msquare(matrix *mtrx);
+matrix msqrt(matrix *mtrx);
+matrix mpow(matrix *mtrx, double nrow);
+matrix mexp(matrix *mtrx);
+matrix msin(matrix *mtrx); // TODO
+matrix mcos(matrix *mtrx); // TODO
+matrix mtan(matrix *mtrx); // TODO
 
 #endif

@@ -9,3 +9,5 @@ add_library(Linalg SHARED
 )
 
 target_include_directories(Linalg PUBLIC ${src}/include)
+
+target_link_libraries(Linalg PRIVATE m)
