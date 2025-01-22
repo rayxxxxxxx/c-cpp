@@ -1,21 +1,12 @@
 #ifndef CSTRING_H
 #define CSTRING_H
 
-typedef struct
-{
-    int size;
-    char *p;
-} Str;
+size_t strlen(char *strlit);
 
-int _strLiteralSize(char slit[]);
+char *mkstr(size_t size);
+char *fromstrlit(char strlit[]);
+char *cpstr(char *str);
 
-Str mkstr(char slit[]);
-Str cpstr(Str *s);
-void delstr(Str *s);
-
-Str slicestr(Str *s, int begin, int end);
-Str scncts(Str *s1, Str *s2);
-Str scnctc(Str *s, char slit[]);
-Str ccncts(char slit[], Str *s);
+void delstr(char *str);
 
 #endif
