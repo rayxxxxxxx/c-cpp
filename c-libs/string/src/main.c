@@ -13,7 +13,7 @@ int main(int argc, char *args[])
     string s5 = slice(&s3, 3, 8);
     string *strs = splitc(&s3, ' ');
 
-    reverse(&s4);
+    s4 = reverse(&s4);
 
     print_string(&s1);
     print_string(&s2);

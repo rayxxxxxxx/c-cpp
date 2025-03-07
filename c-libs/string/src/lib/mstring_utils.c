@@ -37,8 +37,8 @@ size_t countc(string *s, char c, size_t skip)
 string reverse(string *s)
 {
     string newstr = copy_string(s);
-    for (size_t i = 0; i < s->size / 2; i++)
-        swapc(s, i, s->size - i - 1);
+    for (size_t i = 0; i < newstr.size / 2; i++)
+        swapc(&newstr, i, newstr.size - i - 1);
     return newstr;
 }
 
