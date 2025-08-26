@@ -39,8 +39,6 @@ int main(int argc, char *argv[])
 void printStack(stack *stk)
 {
     for (size_t i = 0; i < stk->size; i++)
-    {
         printf("%d ", stk->p[i]);
-    }
     printf("\n");
 }

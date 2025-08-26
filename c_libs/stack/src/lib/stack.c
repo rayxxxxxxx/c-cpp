@@ -23,9 +23,7 @@ stack copy_stack(stack *other)
     stk.p = (int *)malloc(other->capacity * sizeof(int));
 
     for (size_t i = 0; i < other->size; i++)
-    {
         stk.p[i] = other->p[i];
-    }
 
     return stk;
 }
@@ -64,9 +62,7 @@ void stack_push(stack *stk, int value)
 int stack_pop(stack *stk)
 {
     if (stk->size == 0)
-    {
         exit(EFAULT);
-    }
 
     if (stk->size <= stk->capacity / 4)
     {
@@ -74,9 +70,7 @@ int stack_pop(stack *stk)
         int *newptr = (int *)malloc(newCapacity * sizeof(int));
 
         for (size_t i = 0; i < stk->size; i++)
-        {
             newptr[i] = stk->p[i];
-        }
 
         free(stk->p);
 
